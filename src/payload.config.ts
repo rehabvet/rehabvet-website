@@ -15,6 +15,7 @@ import { BlogPosts } from './collections/BlogPosts'
 import { PatientStories } from './collections/PatientStories'
 import { TeamMembers } from './collections/TeamMembers'
 import { FAQs } from './collections/FAQs'
+import { Pages } from './collections/Pages'
 import { SiteSettings } from './globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
@@ -27,7 +28,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Services, Modalities, Conditions, BlogPosts, PatientStories, TeamMembers, FAQs],
+  collections: [Users, Media, Services, Modalities, Conditions, BlogPosts, PatientStories, TeamMembers, FAQs, Pages],
   globals: [SiteSettings],
   plugins: [
     vercelBlobStorage({
