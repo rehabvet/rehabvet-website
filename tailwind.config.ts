@@ -1,7 +1,13 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
-  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
+  content: [
+    './src/app/(frontend)/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  // Exclude (payload) route group — Payload has its own styles
+  // Tailwind content scanning already excludes it via the paths above
+
   theme: {
     extend: {
       colors: {
