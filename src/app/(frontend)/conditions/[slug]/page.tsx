@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (!condition) return { title: 'Condition Not Found' }
     return {
       title: (condition.seo as any)?.metaTitle || condition.title,
-      description: (condition.seo as any)?.metaDescription || condition.summary || '',
+      description: (condition.seo as any)?.metaDescription || condition.excerpt || '',
     }
   } catch {
     return { title: slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) }
@@ -51,7 +51,7 @@ export default async function ConditionPage({ params }: Props) {
 
   const title = condition?.title || slug.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())
   const category = condition?.category || null
-  const summary = condition?.summary || ''
+  const summary = condition?.excerpt || ''
   const description = condition?.description || ''
   const symptoms: string[] = condition?.symptoms || []
   const treatments: string[] = condition?.treatments || []

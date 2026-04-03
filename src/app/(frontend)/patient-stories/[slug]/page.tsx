@@ -14,11 +14,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       where: { slug: { equals: slug } },
       limit: 1,
     })
-    const story = result.docs[0]
+    const story = result.docs[0] as any
     if (!story) return { title: 'Patient Story Not Found' }
     return {
-      title: (story.seo as any)?.metaTitle || `${story.petName}'s Story`,
-      description: (story.seo as any)?.metaDescription || story.teaser || story.excerpt || '',
+      title: story.seo?.metaTitle || `${story.patientName || story.petName}'s Story`,
+      description: story.seo?.metaDescription || story.teaser || story.excerpt || '',
     }
   } catch {
     return { title: slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) }
@@ -44,7 +44,7 @@ export default async function PatientStoryPage({ params }: Props) {
   const petName = story?.petName || slug.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())
   const breed = story?.breed || null
   const condition = story?.condition || null
-  const teaser = story?.teaser || story?.excerpt || ''
+  const teaser = (story as any)?.teaser || (story as any)?.excerpt || ''
   const content = story?.content || ''
   const outcome = story?.outcome || null
   const galleryImages: string[] = story?.galleryImages || []

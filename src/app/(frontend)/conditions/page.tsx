@@ -10,31 +10,31 @@ export const metadata: Metadata = {
 
 const CATEGORIES = ['Developmental', 'Degenerative', 'Orthopaedic', 'Neurological', 'Cancer'] as const
 
-const defaultConditions: Record<string, { title: string; slug: string; summary: string }[]> = {
+const defaultConditions: Record<string, { title: string; slug: string; excerpt: string }[]> = {
   Developmental: [
-    { title: 'Hip Dysplasia', slug: 'hip-dysplasia', summary: 'Abnormal development of the hip joint leading to pain and reduced mobility.' },
-    { title: 'Elbow Dysplasia', slug: 'elbow-dysplasia', summary: 'A group of developmental abnormalities of the elbow joint common in large breeds.' },
-    { title: 'Osteochondrosis (OCD)', slug: 'osteochondrosis', summary: 'A developmental condition affecting cartilage growth in young animals.' },
+    { title: 'Hip Dysplasia', slug: 'hip-dysplasia', excerpt: 'Abnormal development of the hip joint leading to pain and reduced mobility.' },
+    { title: 'Elbow Dysplasia', slug: 'elbow-dysplasia', excerpt: 'A group of developmental abnormalities of the elbow joint common in large breeds.' },
+    { title: 'Osteochondrosis (OCD)', slug: 'osteochondrosis', excerpt: 'A developmental condition affecting cartilage growth in young animals.' },
   ],
   Degenerative: [
-    { title: 'Osteoarthritis', slug: 'osteoarthritis', summary: 'Progressive joint disease causing cartilage breakdown, pain, and stiffness.' },
-    { title: 'Degenerative Myelopathy', slug: 'degenerative-myelopathy', summary: 'A progressive spinal cord disease affecting the hind limbs in dogs.' },
-    { title: 'Spondylosis Deformans', slug: 'spondylosis-deformans', summary: 'Bony spurs that form along the spine, often causing stiffness and discomfort.' },
+    { title: 'Osteoarthritis', slug: 'osteoarthritis', excerpt: 'Progressive joint disease causing cartilage breakdown, pain, and stiffness.' },
+    { title: 'Degenerative Myelopathy', slug: 'degenerative-myelopathy', excerpt: 'A progressive spinal cord disease affecting the hind limbs in dogs.' },
+    { title: 'Spondylosis Deformans', slug: 'spondylosis-deformans', excerpt: 'Bony spurs that form along the spine, often causing stiffness and discomfort.' },
   ],
   Orthopaedic: [
-    { title: 'Cruciate Ligament Rupture', slug: 'cruciate-ligament-rupture', summary: 'Tearing of the cranial cruciate ligament in the knee, a common injury in dogs.' },
-    { title: 'Fracture Rehabilitation', slug: 'fracture-rehabilitation', summary: 'Post-surgical or conservative rehabilitation following bone fractures.' },
-    { title: 'Luxating Patella', slug: 'luxating-patella', summary: 'Dislocation of the kneecap causing intermittent lameness and discomfort.' },
+    { title: 'Cruciate Ligament Rupture', slug: 'cruciate-ligament-rupture', excerpt: 'Tearing of the cranial cruciate ligament in the knee, a common injury in dogs.' },
+    { title: 'Fracture Rehabilitation', slug: 'fracture-rehabilitation', excerpt: 'Post-surgical or conservative rehabilitation following bone fractures.' },
+    { title: 'Luxating Patella', slug: 'luxating-patella', excerpt: 'Dislocation of the kneecap causing intermittent lameness and discomfort.' },
   ],
   Neurological: [
-    { title: 'Intervertebral Disc Disease (IVDD)', slug: 'ivdd', summary: 'Disc herniation pressing on the spinal cord, causing pain or paralysis.' },
-    { title: 'Fibrocartilaginous Embolism (FCE)', slug: 'fce', summary: 'A spinal stroke causing sudden onset weakness or paralysis.' },
-    { title: 'Wobbler Syndrome', slug: 'wobbler-syndrome', summary: 'Spinal cord compression in the neck causing an unsteady gait in dogs.' },
+    { title: 'Intervertebral Disc Disease (IVDD)', slug: 'ivdd', excerpt: 'Disc herniation pressing on the spinal cord, causing pain or paralysis.' },
+    { title: 'Fibrocartilaginous Embolism (FCE)', slug: 'fce', excerpt: 'A spinal stroke causing sudden onset weakness or paralysis.' },
+    { title: 'Wobbler Syndrome', slug: 'wobbler-syndrome', excerpt: 'Spinal cord compression in the neck causing an unsteady gait in dogs.' },
   ],
   Cancer: [
-    { title: 'Post-Amputation Rehabilitation', slug: 'post-amputation-rehabilitation', summary: 'Helping animals regain strength and mobility following limb amputation.' },
-    { title: 'Cancer-Related Pain Management', slug: 'cancer-pain-management', summary: 'Multi-modal approaches to improve quality of life in cancer patients.' },
-    { title: 'Post-Surgical Oncology Recovery', slug: 'oncology-recovery', summary: 'Rehabilitation support following surgical tumour removal.' },
+    { title: 'Post-Amputation Rehabilitation', slug: 'post-amputation-rehabilitation', excerpt: 'Helping animals regain strength and mobility following limb amputation.' },
+    { title: 'Cancer-Related Pain Management', slug: 'cancer-pain-management', excerpt: 'Multi-modal approaches to improve quality of life in cancer patients.' },
+    { title: 'Post-Surgical Oncology Recovery', slug: 'oncology-recovery', excerpt: 'Rehabilitation support following surgical tumour removal.' },
   ],
 }
 
@@ -56,16 +56,16 @@ export default async function ConditionsPage() {
     // DB not available yet
   }
 
-  const groupedConditions: Record<string, { title: string; slug: string; summary: string }[]> =
+  const groupedConditions: Record<string, { title: string; slug: string; excerpt: string }[]> =
     conditions.length > 0
       ? CATEGORIES.reduce(
           (acc, cat) => {
             acc[cat] = conditions
               .filter((c: any) => c.category === cat)
-              .map((c: any) => ({ title: c.title, slug: c.slug, summary: c.summary || '' }))
+              .map((c: any) => ({ title: c.title, slug: c.slug, excerpt: c.excerpt || '' }))
             return acc
           },
-          {} as Record<string, { title: string; slug: string; summary: string }[]>,
+          {} as Record<string, { title: string; slug: string; excerpt: string }[]>,
         )
       : defaultConditions
 
@@ -109,7 +109,7 @@ export default async function ConditionsPage() {
                       <h3 className="mt-3 text-lg font-semibold text-gray-900 group-hover:text-primary-500 transition-colors">
                         {condition.title}
                       </h3>
-                      <p className="mt-2 text-sm text-gray-600 line-clamp-2">{condition.summary}</p>
+                      <p className="mt-2 text-sm text-gray-600 line-clamp-2">{condition.excerpt}</p>
                       <span className="mt-4 inline-block text-sm font-medium text-primary-500 group-hover:text-primary-700">
                         Learn more &rarr;
                       </span>
