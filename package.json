@@ -11,7 +11,7 @@
     "generate:types": "payload generate:types",
     "generate:schema": "payload generate:graphQL",
     "payload": "payload",
-    "postbuild": "next-sitemap",
+    "postbuild": "next-sitemap --config next-sitemap.config.cjs",
     "migrate": "tsx scripts/migrate-from-wp.ts"
   },
   "dependencies": {
