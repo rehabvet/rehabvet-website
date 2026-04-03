@@ -40,7 +40,7 @@ export default buildConfig({
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'default-secret-change-me',
-  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || '',
+  serverURL: (process.env.NEXT_PUBLIC_SERVER_URL || '').trim(),
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
