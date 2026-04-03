@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url'
 import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import sharp from 'sharp'
 
 import { Users } from './collections/Users'
@@ -28,6 +29,15 @@ export default buildConfig({
   },
   collections: [Users, Media, Services, Modalities, Conditions, BlogPosts, PatientStories, TeamMembers, FAQs],
   globals: [SiteSettings],
+  plugins: [
+    vercelBlobStorage({
+      enabled: !!process.env.BLOB_READ_WRITE_TOKEN,
+      token: process.env.BLOB_READ_WRITE_TOKEN || '',
+      collections: {
+        media: true,
+      },
+    }),
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'default-secret-change-me',
   typescript: {
