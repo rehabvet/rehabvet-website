@@ -4,6 +4,8 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Condition } from '@/payload-types'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Conditions We Treat',
   description: 'RehabVet treats a wide range of conditions including developmental, degenerative, orthopaedic, neurological, and cancer-related conditions in animals.',

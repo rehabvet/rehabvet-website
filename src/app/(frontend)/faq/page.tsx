@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Frequently Asked Questions',
   description: 'Answers to common questions about RehabVet\'s veterinary rehabilitation services, appointments, pricing, and what to expect.',

@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Patient Stories',
   description: 'Real recovery stories from pets and their owners at RehabVet. Be inspired by the transformations we have witnessed.',

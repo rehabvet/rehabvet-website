@@ -5,6 +5,8 @@ import config from '@payload-config'
 import { PayloadImage } from '@/components/PayloadImage'
 import type { BlogPost, Media } from '@/payload-types'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Blog',
   description: 'Expert advice, rehabilitation tips, and pet health articles from the RehabVet team.',

@@ -7,6 +7,8 @@ import { PayloadImage } from '@/components/PayloadImage'
 import { RichText } from '@/components/RichText'
 import type { BlogPost, Media } from '@/payload-types'
 
+export const dynamic = 'force-dynamic'
+
 type Props = { params: Promise<{ slug: string }> }
 
 const CATEGORY_LABELS: Record<string, string> = {

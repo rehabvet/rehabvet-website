@@ -7,6 +7,8 @@ import { PayloadImage } from '@/components/PayloadImage'
 import { RichText } from '@/components/RichText'
 import type { Modality, Condition, Media } from '@/payload-types'
 
+export const dynamic = 'force-dynamic'
+
 type Props = { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {

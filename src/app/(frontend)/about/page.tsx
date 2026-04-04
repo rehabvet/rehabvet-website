@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'About Us',
   description: 'Learn about RehabVet, Singapore\'s leading veterinary rehabilitation clinic and our dedicated team.',

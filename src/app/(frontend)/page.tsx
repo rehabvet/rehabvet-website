@@ -5,6 +5,8 @@ import config from '@payload-config'
 import { PayloadImage } from '@/components/PayloadImage'
 import type { Service, Condition, BlogPost, Media } from '@/payload-types'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'RehabVet — Veterinary Rehabilitation Singapore',
   description: "Singapore's leading veterinary rehabilitation clinic offering physiotherapy, hydrotherapy, acupuncture, and more for your pets.",

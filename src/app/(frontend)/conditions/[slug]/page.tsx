@@ -6,6 +6,8 @@ import { notFound } from 'next/navigation'
 import { RichText } from '@/components/RichText'
 import type { Condition, Modality, BlogPost } from '@/payload-types'
 
+export const dynamic = 'force-dynamic'
+
 type Props = { params: Promise<{ slug: string }> }
 
 const CATEGORY_LABELS: Record<string, string> = {

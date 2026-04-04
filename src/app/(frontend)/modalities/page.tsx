@@ -5,6 +5,8 @@ import config from '@payload-config'
 import { PayloadImage } from '@/components/PayloadImage'
 import type { Modality, Media } from '@/payload-types'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Modalities',
   description: 'Discover our range of veterinary rehabilitation modalities including laser therapy, electrotherapy, underwater treadmill, and more.',
