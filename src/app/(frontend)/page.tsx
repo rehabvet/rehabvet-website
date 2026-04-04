@@ -7,7 +7,7 @@ import { PayloadImage } from '@/components/PayloadImage'
 import type { Service, Condition, BlogPost, Media } from '@/payload-types'
 import SectionHeader from '@/components/shared/section-header'
 import Button from '@/components/shared/primary-button'
-import { FaCheckCircle, FaHeart, FaMedkit } from 'react-icons/fa'
+import { FaCheckCircle, FaHeart, FaMedkit, FaPaw } from 'react-icons/fa'
 
 export const dynamic = 'force-dynamic'
 
@@ -31,6 +31,22 @@ const CATEGORY_LABELS: Record<string, string> = {
   neurological: 'Neurological',
   cancer: 'Cancer',
 }
+
+const HOMEPAGE_SERVICES = [
+  { title: 'Veterinary Rehabilitation', slug: 'veterinary-rehabilitation-consultation', excerpt: 'Specialist advice and support to help animals recover from injury or illness.' },
+  { title: 'Rehabilitation', slug: 'animal-rehabilitation', excerpt: 'Restoring an animal to its optimal physical and mental health through medical and behavioural interventions.' },
+  { title: 'Physiotherapy', slug: 'dog-physiotherapy', excerpt: 'Tailored treatments to help improve the mobility and wellbeing of dogs.' },
+  { title: 'Hydrotherapy', slug: 'dog-hydrotherapy', excerpt: 'A beneficial service that can help to improve the mobility and well-being of our canine companions.' },
+  { title: 'Hyperbaric Oxygen Treatment', slug: 'hbot-hyperbaric-oxygen-therapy-animals', excerpt: 'Increased oxygen levels to help improve overall health and wellbeing.' },
+  { title: 'Traditional Chinese Medicine', slug: 'traditional-chinese-veterinary-medicine', excerpt: 'A holistic approach combining ancient Chinese wisdom with modern veterinary science.' },
+  { title: 'Chiropractic for Dogs', slug: 'dog-chiropractic', excerpt: 'A non-invasive and drug-free way to improve the well-being of our four-legged friends.' },
+  { title: 'Acupuncture', slug: 'dog-acupuncture', excerpt: 'Restoring the health, mobility, and quality of life of pets recovering from injury.' },
+]
+
+const SERVICE_ICONS = [
+  FaMedkit, FaHeart, FaPaw, FaCheckCircle,
+  FaMedkit, FaPaw, FaHeart, FaCheckCircle,
+]
 
 const MEDIA_LOGOS = [
   { src: '/images/cna-logo.webp', alt: 'CNA' },
@@ -200,47 +216,33 @@ export default async function HomePage() {
             subtitle="What We Do"
             title="Expert Rehabilitation Services"
           />
-          {services.length > 0 ? (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {services.slice(0, 6).map((service, i) => (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {HOMEPAGE_SERVICES.map((service, i) => {
+              const Icon = SERVICE_ICONS[i]
+              return (
                 <Link
-                  key={service.id}
+                  key={service.slug}
                   href={`/services/${service.slug}`}
                   className="d2c_service_card group rounded-2xl bg-white overflow-hidden border border-border_one hover:border-primary hover:shadow-lg transition-all duration-300"
                   data-aos="zoom-in"
                   data-aos-delay={200 + i * 100}
                 >
-                  <div className="relative h-48 overflow-hidden bg-primary_shade">
-                    <PayloadImage
-                      media={service.heroImage as Media}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="group-hover:scale-105 transition-transform duration-500"
-                    />
+                  <div className="relative h-40 overflow-hidden bg-primary_shade flex items-center justify-center">
+                    <Icon className="text-primary/30 text-6xl group-hover:text-primary/50 transition-colors duration-300" />
                   </div>
                   <div className="p-6 space-y-2">
-                    <h5 className="!font-bold group-hover:text-primary transition-colors">
+                    <h5 className="!font-bold !text-lg group-hover:text-primary transition-colors">
                       {service.title}
                     </h5>
-                    {service.excerpt && (
-                      <p className="text-sm line-clamp-2">{service.excerpt}</p>
-                    )}
+                    <p className="text-sm line-clamp-2">{service.excerpt}</p>
                     <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary">
                       Learn more &rarr;
                     </span>
                   </div>
                 </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-              {['Physiotherapy', 'Hydrotherapy', 'Acupuncture', 'HBOT', 'Rehabilitation', 'Hydro Treadmill', 'TCM', 'Manual Therapy', 'Electrical Therapy', 'Therapeutic Laser'].map((name, i) => (
-                <div key={name} className="rounded-2xl bg-white border border-border_one p-6 text-center hover:border-primary hover:shadow-md transition-all" data-aos="fade-up" data-aos-delay={100 + i * 50}>
-                  <p className="font-semibold text-sm text-dark">{name}</p>
-                </div>
-              ))}
-            </div>
-          )}
+              )
+            })}
+          </div>
           <div className="mt-12 text-center" data-aos="fade-up">
             <Button text="View All Services" href="/services" as="link" variant="inverse" />
           </div>
