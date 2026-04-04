@@ -126,7 +126,7 @@ export default async function HomePage() {
                 Singapore&apos;s #1 Vet Rehab Clinic
               </p>
             </div>
-            <h1 className="animateText text-white !tracking-[-3px] lg:!tracking-[-4px]">
+            <h1 className="animateText text-white !tracking-tight">
               Veterinary Rehabilitation &amp; Physiotherapy
             </h1>
             <p className="mt-6 text-lg leading-8 text-white/80" data-aos="fade-up" data-aos-delay={300}>
