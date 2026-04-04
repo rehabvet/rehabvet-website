@@ -42,7 +42,7 @@ const MODALITIES = [
   },
   {
     title: 'Extracorporeal Shockwave Therapy',
-    slug: 'extracorporeal-shockwave',
+    slug: 'extracorporeal-shockwave-therapy',
     excerpt:
       'Extracorporeal Shockwave Therapy (ESWT) is a non-invasive treatment for dogs which uses sound waves to help reduce pain.',
   },
@@ -89,8 +89,9 @@ export default function ModalitiesPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {MODALITIES.map((mod) => (
-              <div
+              <Link
                 key={mod.slug}
+                href={`/modalities/${mod.slug}`}
                 className="group rounded-2xl border border-gray-100 bg-white overflow-hidden shadow-sm hover:shadow-lg hover:border-primary-200 transition-all"
               >
                 <div className="h-48 bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center">
@@ -107,7 +108,7 @@ export default function ModalitiesPage() {
                     Read More &rarr;
                   </span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

@@ -18,43 +18,43 @@ const SERVICES = [
   },
   {
     title: 'Rehabilitation',
-    slug: 'rehabilitation',
+    slug: 'animal-rehabilitation',
     excerpt:
       'Animal rehabilitation is the process of restoring an animal to its optimal physical and mental health through medical and behavioural interventions.',
   },
   {
     title: 'Physiotherapy',
-    slug: 'physiotherapy',
+    slug: 'dog-physiotherapy',
     excerpt:
       'Dog physiotherapy is a specialist service which provides tailored treatments to help improve the mobility and wellbeing of dogs. It is a great way to ensure your pet is in the best possible health.',
   },
   {
     title: 'Hydrotherapy',
-    slug: 'hydrotherapy',
+    slug: 'dog-hydrotherapy',
     excerpt:
       'Hydrotherapy for Dogs is a beneficial service that can help to improve the mobility and well-being of our canine companions. It is a great way to provide a natural and holistic approach.',
   },
   {
     title: 'Hyperbaric Oxygen Treatment',
-    slug: 'hyperbaric-oxygen-treatment',
+    slug: 'hbot-hyperbaric-oxygen-therapy-animals',
     excerpt:
       'Hyperbaric Oxygen Treatment is a medical procedure used to provide dogs with increased oxygen levels, which can help to improve their overall health and wellbeing.',
   },
   {
     title: 'Traditional Chinese Medicine',
-    slug: 'traditional-chinese-medicine',
+    slug: 'traditional-chinese-veterinary-medicine',
     excerpt:
       'This service provides traditional Chinese veterinary medicine for dogs, offering a holistic approach to pet care. It combines ancient Chinese wisdom with modern veterinary science.',
   },
   {
     title: 'Chiropractic for Dogs',
-    slug: 'chiropractic-for-dogs',
+    slug: 'dog-chiropractic',
     excerpt:
       'Chiropractic treatment is a holistic approach to canine health, providing a non-invasive and drug-free way to improve the well-being of our four-legged friends.',
   },
   {
     title: 'Acupuncture',
-    slug: 'acupuncture',
+    slug: 'dog-acupuncture',
     excerpt:
       'Animal rehabilitation is a specialised field in veterinary medicine that focuses on restoring the health, mobility, and quality of life of pets recovering from injury.',
   },
@@ -80,8 +80,9 @@ export default function ServicesPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {SERVICES.map((service) => (
-              <div
+              <Link
                 key={service.slug}
+                href={`/services/${service.slug}`}
                 className="group rounded-2xl border border-gray-100 bg-white overflow-hidden shadow-sm hover:shadow-lg hover:border-primary-200 transition-all"
               >
                 <div className="h-48 bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center">
@@ -100,7 +101,7 @@ export default function ServicesPage() {
                     Read More &rarr;
                   </span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
