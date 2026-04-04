@@ -11,52 +11,52 @@ export const metadata: Metadata = {
 
 const SERVICES = [
   {
-    title: 'Veterinary Rehabilitation Consultation',
+    title: 'Veterinary Rehabilitation',
     slug: 'veterinary-rehabilitation-consultation',
     excerpt:
-      'Get your pet back on their feet with RehabVet\'s veterinary rehabilitation consultation. Let us help your pet live a healthier, happier life.',
+      'Veterinary Rehabilitation Consultation is a service which provides specialist advice and support to help animals recover from injury or illness.',
   },
   {
-    title: 'Animal Rehabilitation',
+    title: 'Rehabilitation',
     slug: 'animal-rehabilitation',
     excerpt:
-      'Restore your pet\'s mobility with expert animal rehabilitation at RehabVet Singapore. Physiotherapy, hydrotherapy & more. Book today.',
+      'Animal rehabilitation is the process of restoring an animal to its optimal physical and mental health through medical and behavioural interventions.',
   },
   {
-    title: 'Dog Physiotherapy',
+    title: 'Physiotherapy',
     slug: 'dog-physiotherapy',
     excerpt:
-      'RehabVet provides physiotherapy for dogs to help them recover from injury and improve their mobility. Get your pup back to their best with RehabVet!',
+      'Dog physiotherapy is a specialist service which provides tailored treatments to help improve the mobility and wellbeing of dogs. It is a great way to ensure your pet is in the best possible health.',
   },
   {
-    title: 'Hydrotherapy for Dogs',
+    title: 'Hydrotherapy',
     slug: 'dog-hydrotherapy',
     excerpt:
-      'RehabVet offers hydrotherapy treatment for dogs to help them recover from injury or surgery. Get in touch with our experienced team!',
+      'Hydrotherapy for Dogs is a beneficial service that can help to improve the mobility and well-being of our canine companions. It is a great way to provide a natural and holistic approach.',
   },
   {
-    title: 'Hyperbaric Oxygen Therapy for Pets',
+    title: 'Hyperbaric Oxygen Treatment',
     slug: 'hbot-hyperbaric-oxygen-therapy-animals',
     excerpt:
-      'RehabVet offers Hyperbaric Oxygen Treatment for dogs to help them recover from injury or illness. Get your pup back to health with our expert care!',
+      'Hyperbaric Oxygen Treatment is a medical procedure used to provide dogs with increased oxygen levels, which can help to improve their overall health and wellbeing.',
   },
   {
-    title: 'Traditional Chinese Veterinary Medicine (TCVM) for Pets',
+    title: 'Traditional Chinese Medicine',
     slug: 'traditional-chinese-veterinary-medicine',
     excerpt:
-      'Traditional Chinese Veterinary Medicine blends acupuncture, herbal therapy and holistic care for your pet\'s wellbeing. Learn more at RehabVet Singapore.',
+      'This service provides traditional Chinese veterinary medicine for dogs, offering a holistic approach to pet care. It combines ancient Chinese wisdom with modern veterinary science.',
   },
   {
-    title: 'Dog Chiropractic in Singapore',
+    title: 'Chiropractic for Dogs',
     slug: 'dog-chiropractic',
     excerpt:
-      'RehabVet offers chiropractic treatment for dogs to help improve mobility and reduce pain. Get your pet back to feeling their best with our experienced team.',
+      'Chiropractic treatment is a holistic approach to canine health, providing a non-invasive and drug-free way to improve the well-being of our four-legged friends.',
   },
   {
-    title: 'Dog Acupuncture in Singapore',
+    title: 'Acupuncture',
     slug: 'dog-acupuncture',
     excerpt:
-      'Discover the benefits of acupuncture for pets at RehabVet to explore how this therapy helps dogs and cats find relief and wellness.',
+      'Animal rehabilitation is a specialised field in veterinary medicine that focuses on restoring the health, mobility, and quality of life of pets recovering from injury.',
   },
 ]
 

@@ -41,7 +41,7 @@ const MODALITIES = [
       'Ultrasound Therapy is a non-invasive treatment for dogs and cats which uses sound waves to reduce pain and inflammation.',
   },
   {
-    title: 'Extracorporeal Shockwave Therapy',
+    title: 'Extracorporeal shockwave',
     slug: 'extracorporeal-shockwave-therapy-eswt-for-animals',
     excerpt:
       'Extracorporeal Shockwave Therapy (ESWT) is a non-invasive treatment for dogs which uses sound waves to help reduce pain.',
