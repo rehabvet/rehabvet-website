@@ -10,62 +10,7 @@ export const metadata: Metadata = {
   description: 'Real recovery stories from pets and their owners at RehabVet. Be inspired by the transformations we have witnessed.',
 }
 
-const defaultStories = [
-  {
-    slug: 'max-cruciate-recovery',
-    petName: 'Max',
-    breed: 'Labrador Retriever',
-    condition: 'Cruciate Ligament Rupture',
-    teaser: 'Max tore his cruciate ligament chasing a ball. After TPLO surgery and 12 weeks of rehabilitation, he was back to his energetic self.',
-    outcome: 'Full recovery',
-    emoji: '🐕',
-  },
-  {
-    slug: 'bella-ivdd-journey',
-    petName: 'Bella',
-    breed: 'Dachshund',
-    condition: 'Intervertebral Disc Disease (IVDD)',
-    teaser: 'Bella was paralysed in her hind legs following a disc herniation. Intensive hydrotherapy and physiotherapy gave her back her mobility.',
-    outcome: 'Walking independently',
-    emoji: '🐾',
-  },
-  {
-    slug: 'charlie-hip-dysplasia',
-    petName: 'Charlie',
-    breed: 'German Shepherd',
-    condition: 'Hip Dysplasia',
-    teaser: 'Charlie was diagnosed with severe bilateral hip dysplasia at 18 months. A tailored rehab programme transformed his quality of life.',
-    outcome: 'Pain-free mobility',
-    emoji: '🐶',
-  },
-  {
-    slug: 'luna-post-amputation',
-    petName: 'Luna',
-    breed: 'Border Collie',
-    condition: 'Post-Amputation (Osteosarcoma)',
-    teaser: 'After losing a front leg to bone cancer, Luna learned to navigate life as a tripod with the help of our dedicated rehabilitation team.',
-    outcome: 'Happy and active',
-    emoji: '🦮',
-  },
-  {
-    slug: 'oscar-fce-recovery',
-    petName: 'Oscar',
-    breed: 'Cocker Spaniel',
-    condition: 'Fibrocartilaginous Embolism (FCE)',
-    teaser: 'Oscar suffered a spinal stroke that left him unable to use his hind legs. Months of dedicated therapy brought him back to near-normal.',
-    outcome: 'Near-normal function',
-    emoji: '🐩',
-  },
-  {
-    slug: 'rosie-osteoarthritis',
-    petName: 'Rosie',
-    breed: 'Golden Retriever',
-    condition: 'Osteoarthritis',
-    teaser: 'At 10 years old, Rosie was struggling with severe arthritis. An ongoing rehabilitation programme keeps her comfortable and active.',
-    outcome: 'Managed long-term',
-    emoji: '🐕‍🦺',
-  },
-]
+
 
 export default async function PatientStoriesPage() {
   let stories: any[] = []
@@ -77,7 +22,7 @@ export default async function PatientStoriesPage() {
     // DB not available yet
   }
 
-  const displayStories = stories.length > 0 ? stories : defaultStories
+  const displayStories = stories
 
   return (
     <>
@@ -85,14 +30,19 @@ export default async function PatientStoriesPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold sm:text-5xl">Patient Stories</h1>
           <p className="mt-4 max-w-2xl text-lg text-primary-100">
-            Every recovery is a unique journey. Read about the real pets whose lives have been
-            transformed through veterinary rehabilitation.
+            In memories of all immobile dogs that were not given a second chance.
           </p>
         </div>
       </section>
 
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {displayStories.length === 0 ? (
+            <div className="py-16 text-center">
+              <p className="text-gray-500 text-lg">Patient stories coming soon.</p>
+              <Link href="/contact" className="mt-4 inline-block text-primary-600 hover:text-primary-800 font-medium">Contact us about your pet&apos;s journey &rarr;</Link>
+            </div>
+          ) : (
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {displayStories.map((story: any) => (
               <Link
@@ -101,7 +51,7 @@ export default async function PatientStoriesPage() {
                 className="group flex flex-col rounded-2xl border border-gray-100 bg-white shadow-sm hover:shadow-lg hover:border-primary-200 transition-all overflow-hidden"
               >
                 <div className="flex h-48 items-center justify-center bg-gradient-to-br from-primary-50 to-primary-100">
-                  <span className="text-6xl">{story.emoji || '🐾'}</span>
+                  <span className="text-5xl font-bold text-primary-300">{(story.petName || '?')[0]}</span>
                 </div>
                 <div className="flex flex-1 flex-col p-6">
                   <div className="flex items-center justify-between">
@@ -130,6 +80,7 @@ export default async function PatientStoriesPage() {
               </Link>
             ))}
           </div>
+          )}
         </div>
       </section>
 

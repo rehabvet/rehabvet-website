@@ -14,8 +14,8 @@ const teamMembers = [
   {
     name: 'Dr. Sara Lam',
     role: 'Founder & Veterinarian',
-    credentials: 'BVSc MANZCVS (SA Surgery) CVA CVMMP CCRT',
-    bio: 'Dr Sara specializes in animal rehabilitation, physiotherapy, and traditional Chinese veterinary medicine. She has achieved multiple certifications including the Certified Canine Rehabilitation Therapist (CCRT) and Certified Veterinary Acupuncturist (CVA). With her experience and passion for helping animals recover, Dr Sara has built RehabVet into Singapore\'s leading animal rehabilitation clinic.',
+    credentials: 'BVSc (Sydney), CCRT, CVA',
+    bio: 'Dr Sara founded RehabVet in 2019 with a vision to provide Singapore\'s pets with comprehensive rehabilitation care. She holds a Bachelor of Veterinary Science from the University of Sydney, is a Certified Canine Rehabilitation Therapist (CCRT), and a Certified Veterinary Acupuncturist (CVA). With her experience and passion for helping animals recover, Dr Sara has built RehabVet into Singapore\'s leading animal rehabilitation clinic.',
     photo: '/images/team-sara.jpg',
   },
   {
@@ -70,8 +70,8 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold sm:text-5xl">About RehabVet</h1>
           <p className="mt-4 max-w-2xl text-lg text-primary-100">
-            Singapore&apos;s first full-fledged animal rehabilitation clinic, dedicated to helping
-            pets recover, move, and live their best lives.
+            We aim to provide your pets with complementary support therapies that enable them to
+            live a pain free and good quality of life.
           </p>
         </div>
       </section>
@@ -81,12 +81,28 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">Our Purpose</h2>
+            <p className="mt-2 text-sm font-medium uppercase tracking-wider text-primary-600">About Us</p>
             <div className="mt-4 h-1 w-16 bg-primary-500 mx-auto rounded-full" />
             <p className="mt-8 text-lg text-gray-700 leading-relaxed">
               <strong>REHABVET CLINIC</strong> is Singapore&apos;s first full-fledged animal
-              rehabilitation clinic. With our team of well-trained and experienced veterinarians and
-              therapists, the comprehensive facility offers the widest range of rehabilitation
-              modalities to all animals.
+              rehabilitation centre. With our team of well-trained and experienced practitioners,
+              and comprehensive facilities offering the widest range of physical therapy, we aim to
+              provide your pets with complementary support therapies that enable them to live a pain
+              free and good quality of life.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission */}
+      <section className="py-16 bg-gray-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">Our Mission</h2>
+            <div className="mt-4 h-1 w-16 bg-primary-500 mx-auto rounded-full" />
+            <p className="mt-8 text-lg text-gray-700 leading-relaxed">
+              To provide all animals and pets a second chance at living without pain, minimal
+              medication and living well.
             </p>
           </div>
         </div>
