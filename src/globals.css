@@ -33,13 +33,13 @@
 
 @layer components {
   h1 {
-    @apply text-4xl lg:text-6xl xl:text-90 font-bold tracking-normal xl:tracking-[-5px];
+    @apply text-4xl lg:text-6xl xl:text-90 font-bold tracking-tight;
   }
   h2 {
-    @apply text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-[1.1] tracking-normal xl:tracking-[-4px];
+    @apply text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-[1.1] tracking-tight;
   }
   h3 {
-    @apply text-2xl lg:text-3xl xl:text-40 tracking-[-2px];
+    @apply text-2xl lg:text-3xl xl:text-40 tracking-tight;
   }
   h5 {
     @apply text-lg lg:text-xl xl:text-2xl;
