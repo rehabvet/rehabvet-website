@@ -54,11 +54,7 @@ export function Header({
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            {logoUrl ? (
-              <Image src={logoUrl} alt="RehabVet" width={140} height={40} className="h-9 w-auto" priority />
-            ) : (
-              <span className="text-2xl font-bold text-primary-600" style={{color:'#e6ac00'}}>RehabVet</span>
-            )}
+            <Image src={logoUrl || '/logo.webp'} alt="RehabVet" width={346} height={72} className="h-10 w-auto" priority />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1">

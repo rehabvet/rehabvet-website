@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Media } from '@/payload-types'
@@ -54,7 +55,9 @@ export async function Footer() {
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand & Contact */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <h3 className="text-xl font-bold text-white">RehabVet</h3>
+            <Link href="/" className="inline-block mb-4">
+              <Image src="/logo.webp" alt="RehabVet" width={173} height={36} className="h-9 w-auto" />
+            </Link>
             <p className="mt-3 text-sm text-primary-200 leading-relaxed">
               Singapore&apos;s leading veterinary rehabilitation clinic. Helping pets recover, move, and thrive.
             </p>
