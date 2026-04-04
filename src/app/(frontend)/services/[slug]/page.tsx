@@ -112,7 +112,7 @@ export default async function ServicePage({ params }: Props) {
           <div className="mt-16 rounded-2xl bg-primary-50 p-8 text-center">
             <h2 className="text-2xl font-bold text-gray-900">Interested in {service.title}?</h2>
             <p className="mt-2 text-gray-600">Book a consultation to discuss how we can help your pet.</p>
-            <Link href="/contact" className="mt-6 inline-block rounded-full bg-coral-500 px-8 py-3 font-semibold text-white hover:bg-coral-600 transition-colors">
+            <Link href="/contact" className="mt-6 inline-block rounded-full bg-accent-500 px-8 py-3 font-semibold text-white hover:bg-accent-600 transition-colors">
               Book Appointment
             </Link>
           </div>

@@ -163,7 +163,7 @@ export default async function ConditionPage({ params }: Props) {
             <h2 className="text-2xl font-bold text-gray-900">Concerned about your pet?</h2>
             <p className="mt-2 text-gray-600">Our rehabilitation team can assess your pet and create a personalised treatment plan.</p>
             <div className="mt-6 flex flex-wrap justify-center gap-4">
-              <Link href="/contact" className="rounded-full bg-coral-500 px-8 py-3 font-semibold text-white hover:bg-coral-600 transition-colors">
+              <Link href="/contact" className="rounded-full bg-accent-500 px-8 py-3 font-semibold text-white hover:bg-accent-600 transition-colors">
                 Book a Consultation
               </Link>
               <Link href="/conditions" className="rounded-full border border-primary-500 px-8 py-3 font-semibold text-primary-600 hover:bg-primary-50 transition-colors">

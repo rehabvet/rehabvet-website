@@ -137,7 +137,7 @@ export default async function PatientStoryPage({ params }: Props) {
             </div>
           )}
 
-          <div className="mt-16 rounded-2xl bg-coral-400/10 p-8 text-center">
+          <div className="mt-16 rounded-2xl bg-accent-400/10 p-8 text-center">
             <h2 className="text-2xl font-bold text-gray-900">Inspired by {petName}&apos;s story?</h2>
             <p className="mt-2 text-gray-600">
               Our team is ready to help your pet on their road to recovery.
@@ -145,7 +145,7 @@ export default async function PatientStoryPage({ params }: Props) {
             <div className="mt-6 flex flex-wrap justify-center gap-4">
               <Link
                 href="/contact"
-                className="rounded-full bg-coral-400 px-8 py-3 font-semibold text-white hover:bg-coral-600 transition-colors"
+                className="rounded-full bg-accent-400 px-8 py-3 font-semibold text-white hover:bg-accent-600 transition-colors"
               >
                 Book a Consultation
               </Link>

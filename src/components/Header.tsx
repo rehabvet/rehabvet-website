@@ -57,7 +57,7 @@ export function Header({
             {logoUrl ? (
               <Image src={logoUrl} alt="RehabVet" width={140} height={40} className="h-9 w-auto" priority />
             ) : (
-              <span className="text-2xl font-bold text-primary-600">RehabVet</span>
+              <span className="text-2xl font-bold text-primary-600" style={{color:'#e6ac00'}}>RehabVet</span>
             )}
           </Link>
 
@@ -140,7 +140,7 @@ export function Header({
             </Link>
             <Link
               href="/contact"
-              className="ml-2 rounded-full bg-coral-500 px-5 py-2 text-sm font-semibold text-white hover:bg-coral-600 transition-colors"
+              className="ml-2 rounded-full bg-accent-500 px-5 py-2 text-sm font-semibold text-white hover:bg-accent-600 transition-colors"
             >
               Book Appointment
             </Link>
@@ -213,7 +213,7 @@ export function Header({
             <Link href="/faq" className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-primary-50 hover:text-primary-600" onClick={() => setMobileOpen(false)}>FAQ</Link>
             <Link
               href="/contact"
-              className="block rounded-full bg-coral-500 px-5 py-2.5 text-center text-base font-semibold text-white hover:bg-coral-600 mt-3"
+              className="block rounded-full bg-accent-500 px-5 py-2.5 text-center text-base font-semibold text-white hover:bg-accent-600 mt-3"
               onClick={() => setMobileOpen(false)}
             >
               Book Appointment

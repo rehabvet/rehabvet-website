@@ -141,7 +141,7 @@ export default async function PatientStoriesPage() {
           </p>
           <Link
             href="/contact"
-            className="mt-8 inline-block rounded-full bg-coral-400 px-8 py-3 font-semibold text-white hover:bg-coral-600 transition-colors"
+            className="mt-8 inline-block rounded-full bg-accent-400 px-8 py-3 font-semibold text-white hover:bg-accent-600 transition-colors"
           >
             Book a Consultation
           </Link>

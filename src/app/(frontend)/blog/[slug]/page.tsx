@@ -144,7 +144,7 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
             <Link
               href="/contact"
-              className="shrink-0 rounded-full bg-coral-500 px-8 py-3 text-center font-semibold text-white hover:bg-coral-600 transition-colors"
+              className="shrink-0 rounded-full bg-accent-500 px-8 py-3 text-center font-semibold text-white hover:bg-accent-600 transition-colors"
             >
               Book Now
             </Link>

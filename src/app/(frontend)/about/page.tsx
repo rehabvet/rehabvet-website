@@ -89,7 +89,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-4xl px-4 text-center">
           <h2 className="text-3xl font-bold text-white">Join Our Growing Team</h2>
           <p className="mt-4 text-primary-100 text-lg">We are always looking for passionate professionals to join our mission.</p>
-          <Link href="/contact" className="mt-8 inline-block rounded-full bg-coral-400 px-8 py-3 font-semibold text-white hover:bg-coral-600 transition-colors">
+          <Link href="/contact" className="mt-8 inline-block rounded-full bg-accent-400 px-8 py-3 font-semibold text-white hover:bg-accent-600 transition-colors">
             Get in Touch
           </Link>
         </div>

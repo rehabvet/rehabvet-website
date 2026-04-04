@@ -79,7 +79,7 @@ export default async function HomePage() {
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
                 href="/contact"
-                className="rounded-full bg-coral-500 px-8 py-3.5 text-base font-semibold text-white shadow-lg hover:bg-coral-600 hover:shadow-xl transition-all"
+                className="rounded-full bg-accent-500 px-8 py-3.5 text-base font-semibold text-white shadow-lg hover:bg-accent-600 hover:shadow-xl transition-all"
               >
                 Book a Consultation
               </Link>
@@ -264,15 +264,15 @@ export default async function HomePage() {
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link
               href="/contact"
-              className="rounded-full bg-coral-500 px-10 py-4 text-lg font-semibold text-white shadow-lg hover:bg-coral-600 transition-all"
+              className="rounded-full bg-accent-500 px-10 py-4 text-lg font-semibold text-white shadow-lg hover:bg-accent-600 transition-all"
             >
               Book Appointment
             </Link>
             <a
-              href="tel:+6564817735"
+              href="tel:+6562916881"
               className="rounded-full border-2 border-white/80 px-10 py-4 text-lg font-semibold text-white hover:bg-white hover:text-primary-700 transition-all"
             >
-              Call +65 6481 7735
+              Call +65 6291 6881
             </a>
           </div>
         </div>
