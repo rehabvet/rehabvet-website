@@ -1,6 +1,6 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import { Header } from './Header'
+import Navbar from './shared/navbar'
 import type { Media } from '@/payload-types'
 
 export async function HeaderServer() {
@@ -26,5 +26,5 @@ export async function HeaderServer() {
     // DB not available
   }
 
-  return <Header services={services} conditions={conditions} logoUrl={logoUrl} />
+  return <Navbar services={services} conditions={conditions} logoUrl={logoUrl} />
 }

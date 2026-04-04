@@ -6,6 +6,8 @@ import { notFound } from 'next/navigation'
 import { PayloadImage } from '@/components/PayloadImage'
 import { RichText } from '@/components/RichText'
 import type { Modality, Condition, Media } from '@/payload-types'
+import PagesHeader from '@/components/shared/pages-header'
+import Button from '@/components/shared/primary-button'
 
 export const dynamic = 'force-dynamic'
 
@@ -103,31 +105,29 @@ export default async function ModalityPage({ params }: Props) {
 
   const staticEntry = STATIC_MODALITIES[slug]
 
-  /* Static data takes precedence (verified against WP) */
   if (staticEntry) {
     return (
       <>
-        <section className="bg-gradient-to-br from-primary-800 via-primary-600 to-primary-500 text-white">
-          <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-            <Link href="/modalities" className="inline-flex items-center gap-1 text-primary-200 hover:text-white text-sm transition-colors">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-              Back to Modalities
-            </Link>
-            <h1 className="mt-4 text-4xl font-bold sm:text-5xl">{staticEntry.title}</h1>
-            <p className="mt-4 max-w-2xl text-lg text-primary-100">{staticEntry.excerpt}</p>
-          </div>
-        </section>
-        <section className="py-16">
-          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-            <div className="prose prose-lg max-w-none text-gray-700">
-              {staticEntry.body.split('\n\n').map((para, i) => (
-                <p key={i} className="whitespace-pre-line">{para}</p>
-              ))}
-            </div>
-            <div className="mt-16 rounded-2xl bg-primary-50 p-8 text-center">
-              <h2 className="text-2xl font-bold text-gray-900">Want to learn more about {staticEntry.title}?</h2>
-              <p className="mt-2 text-gray-600">Contact us to find out if this treatment is right for your pet.</p>
-              <Link href="/contact" className="mt-6 inline-block rounded-full bg-accent-500 px-8 py-3 font-semibold text-white hover:bg-accent-600 transition-colors">Book Appointment</Link>
+        <PagesHeader
+          title={staticEntry.title}
+          breadcrumb={[{ name: 'Home', href: '/' }, { name: 'Modalities', href: '/modalities' }, { name: staticEntry.title }]}
+        />
+        <section>
+          <div className="container">
+            <div className="max-w-3xl mx-auto">
+              <p className="text-lg leading-relaxed mb-6" data-aos="fade-up">{staticEntry.excerpt}</p>
+              <div className="prose prose-lg max-w-none" data-aos="fade-up" data-aos-delay={200}>
+                {staticEntry.body.split('\n\n').map((para, i) => (
+                  <p key={i} className="whitespace-pre-line">{para}</p>
+                ))}
+              </div>
+              <div className="mt-16 rounded-2xl bg-primary_shade p-8 text-center" data-aos="fade-up">
+                <h3>Want to learn more about {staticEntry.title}?</h3>
+                <p className="mt-2">Contact us to find out if this treatment is right for your pet.</p>
+                <div className="mt-6">
+                  <Button text="Book Appointment" href="/contact" as="link" />
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -135,49 +135,46 @@ export default async function ModalityPage({ params }: Props) {
     )
   }
 
-  /* CMS fallback for slugs not in static data */
   if (modality) {
     const conditionsTreated = (modality.conditionsTreated || []).filter((c): c is Condition => typeof c !== 'number')
     return (
       <>
-        <section className="relative bg-gradient-to-br from-primary-800 via-primary-600 to-primary-500 text-white">
-          {modality.image && typeof modality.image !== 'number' && modality.image.url && (
-            <div className="absolute inset-0 overflow-hidden">
-              <PayloadImage media={modality.image} fill sizes="100vw" className="opacity-20" priority />
-            </div>
-          )}
-          <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-            <Link href="/modalities" className="inline-flex items-center gap-1 text-primary-200 hover:text-white text-sm transition-colors">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-              Back to Modalities
-            </Link>
-            <h1 className="mt-4 text-4xl font-bold sm:text-5xl">{modality.title}</h1>
-            {modality.excerpt && <p className="mt-4 max-w-2xl text-lg text-primary-100">{modality.excerpt}</p>}
-          </div>
-        </section>
-        <section className="py-16">
-          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-            <RichText data={modality.description} />
-            {modality.howItWorks && (
-              <div className="mt-12">
-                <h2 className="text-2xl font-bold text-gray-900">How It Works</h2>
-                <div className="mt-4"><RichText data={modality.howItWorks} /></div>
+        <PagesHeader
+          title={modality.title}
+          breadcrumb={[{ name: 'Home', href: '/' }, { name: 'Modalities', href: '/modalities' }, { name: modality.title }]}
+        />
+        <section>
+          <div className="container">
+            <div className="max-w-3xl mx-auto">
+              {modality.excerpt && <p className="text-lg leading-relaxed mb-6" data-aos="fade-up">{modality.excerpt}</p>}
+              <div data-aos="fade-up" data-aos-delay={200}>
+                <RichText data={modality.description} />
               </div>
-            )}
-            {conditionsTreated.length > 0 && (
-              <div className="mt-12">
-                <h2 className="text-2xl font-bold text-gray-900">Conditions Treated</h2>
-                <div className="mt-4 flex flex-wrap gap-3">
-                  {conditionsTreated.map((c) => (
-                    <Link key={c.id} href={`/conditions/${c.slug}`} className="rounded-full border border-primary-200 bg-primary-50 px-4 py-2 text-sm font-medium text-primary-700 hover:bg-primary-100 transition-colors">{c.title}</Link>
-                  ))}
+              {modality.howItWorks && (
+                <div className="mt-12" data-aos="fade-up">
+                  <h3>How It Works</h3>
+                  <div className="mt-4"><RichText data={modality.howItWorks} /></div>
+                </div>
+              )}
+              {conditionsTreated.length > 0 && (
+                <div className="mt-12" data-aos="fade-up">
+                  <h3>Conditions Treated</h3>
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    {conditionsTreated.map((c) => (
+                      <Link key={c.id} href={`/conditions/${c.slug}`} className="rounded-full border border-primary bg-primary_shade px-4 py-2 text-sm font-medium text-primary hover:bg-primary hover:text-white transition-colors">
+                        {c.title}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+              <div className="mt-16 rounded-2xl bg-primary_shade p-8 text-center" data-aos="fade-up">
+                <h3>Want to learn more?</h3>
+                <p className="mt-2">Contact us to find out if this treatment is right for your pet.</p>
+                <div className="mt-6">
+                  <Button text="Book Appointment" href="/contact" as="link" />
                 </div>
               </div>
-            )}
-            <div className="mt-16 rounded-2xl bg-primary-50 p-8 text-center">
-              <h2 className="text-2xl font-bold text-gray-900">Want to learn more?</h2>
-              <p className="mt-2 text-gray-600">Contact us to find out if this treatment is right for your pet.</p>
-              <Link href="/contact" className="mt-6 inline-block rounded-full bg-accent-500 px-8 py-3 font-semibold text-white hover:bg-accent-600 transition-colors">Book Appointment</Link>
             </div>
           </div>
         </section>
@@ -185,6 +182,5 @@ export default async function ModalityPage({ params }: Props) {
     )
   }
 
-  /* No static entry and no CMS entry */
   notFound()
 }

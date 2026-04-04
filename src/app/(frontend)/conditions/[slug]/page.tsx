@@ -5,6 +5,8 @@ import config from '@payload-config'
 import { notFound } from 'next/navigation'
 import { RichText } from '@/components/RichText'
 import type { Condition, Modality, BlogPost } from '@/payload-types'
+import PagesHeader from '@/components/shared/pages-header'
+import Button from '@/components/shared/primary-button'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,14 +18,6 @@ const CATEGORY_LABELS: Record<string, string> = {
   orthopaedic: 'Orthopaedic',
   neurological: 'Neurological',
   cancer: 'Cancer',
-}
-
-const categoryColors: Record<string, string> = {
-  developmental: 'bg-blue-100 text-blue-800',
-  degenerative: 'bg-amber-100 text-amber-800',
-  orthopaedic: 'bg-purple-100 text-purple-800',
-  neurological: 'bg-rose-100 text-rose-800',
-  cancer: 'bg-gray-100 text-gray-800',
 }
 
 export async function generateStaticParams() {
@@ -43,10 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const result = await payload.find({ collection: 'conditions', where: { slug: { equals: slug } }, limit: 1 })
     const condition = result.docs[0]
     if (!condition) return { title: 'Condition Not Found' }
-    return {
-      title: condition.seo?.metaTitle || condition.title,
-      description: condition.seo?.metaDescription || condition.excerpt || '',
-    }
+    return { title: condition.seo?.metaTitle || condition.title, description: condition.seo?.metaDescription || condition.excerpt || '' }
   } catch {
     return { title: slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) }
   }
@@ -58,12 +49,7 @@ export default async function ConditionPage({ params }: Props) {
 
   try {
     const payload = await getPayload({ config })
-    const result = await payload.find({
-      collection: 'conditions',
-      where: { slug: { equals: slug } },
-      limit: 1,
-      depth: 2,
-    })
+    const result = await payload.find({ collection: 'conditions', where: { slug: { equals: slug } }, limit: 1, depth: 2 })
     condition = result.docs[0] || null
   } catch {}
 
@@ -74,101 +60,80 @@ export default async function ConditionPage({ params }: Props) {
 
   return (
     <>
-      <section className="bg-gradient-to-br from-primary-800 via-primary-600 to-primary-500 py-20 text-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <Link href="/conditions" className="inline-flex items-center gap-1 text-primary-200 hover:text-white text-sm transition-colors">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-            Back to Conditions
-          </Link>
-          <div className="mt-4 flex flex-wrap items-center gap-3">
-            <h1 className="text-4xl font-bold sm:text-5xl">{condition.title}</h1>
-            <span className={`rounded-full px-3 py-1 text-sm font-semibold ${categoryColors[condition.category] || 'bg-white/20 text-white'}`}>
-              {CATEGORY_LABELS[condition.category] || condition.category}
-            </span>
-          </div>
-          {condition.excerpt && <p className="mt-4 max-w-2xl text-lg text-primary-100">{condition.excerpt}</p>}
-        </div>
-      </section>
+      <PagesHeader
+        title={condition.title}
+        breadcrumb={[
+          { name: 'Home', href: '/' },
+          { name: 'Conditions', href: '/conditions' },
+          { name: condition.title },
+        ]}
+      />
 
-      <section className="py-16">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          {/* Description */}
-          {condition.description ? (
-            <RichText data={condition.description} />
-          ) : (
-            <p className="text-gray-600 text-lg">
-              Detailed information about this condition will be available soon.
-            </p>
-          )}
-
-          {/* Symptoms */}
-          {condition.symptoms && (
-            <div className="mt-12">
-              <h2 className="text-2xl font-bold text-gray-900">Common Symptoms</h2>
-              <div className="mt-4">
-                <RichText data={condition.symptoms} />
-              </div>
+      <section>
+        <div className="container">
+          <div className="max-w-3xl mx-auto">
+            <div className="mb-6" data-aos="fade-up">
+              <span className="inline-block rounded-full bg-primary_shade px-4 py-1 text-sm font-semibold text-primary">
+                {CATEGORY_LABELS[condition.category] || condition.category}
+              </span>
             </div>
-          )}
 
-          {/* Treatments */}
-          {condition.treatments && (
-            <div className="mt-12">
-              <h2 className="text-2xl font-bold text-gray-900">How We Help</h2>
-              <div className="mt-4">
-                <RichText data={condition.treatments} />
+            {condition.excerpt && <p className="text-lg leading-relaxed mb-6" data-aos="fade-up">{condition.excerpt}</p>}
+
+            {condition.description ? (
+              <div data-aos="fade-up" data-aos-delay={200}><RichText data={condition.description} /></div>
+            ) : (
+              <p className="text-lg" data-aos="fade-up">Detailed information about this condition will be available soon.</p>
+            )}
+
+            {condition.symptoms && (
+              <div className="mt-12" data-aos="fade-up">
+                <h3>Common Symptoms</h3>
+                <div className="mt-4"><RichText data={condition.symptoms} /></div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Related Modalities */}
-          {relatedModalities.length > 0 && (
-            <div className="mt-12">
-              <h2 className="text-2xl font-bold text-gray-900">Related Modalities</h2>
-              <div className="mt-4 flex flex-wrap gap-3">
-                {relatedModalities.map((modality) => (
-                  <Link
-                    key={modality.id}
-                    href={`/modalities/${modality.slug}`}
-                    className="rounded-full border border-primary-200 bg-primary-50 px-4 py-2 text-sm font-medium text-primary-700 hover:bg-primary-100 transition-colors"
-                  >
-                    {modality.title}
-                  </Link>
-                ))}
+            {condition.treatments && (
+              <div className="mt-12" data-aos="fade-up">
+                <h3>How We Help</h3>
+                <div className="mt-4"><RichText data={condition.treatments} /></div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Related Blog Posts */}
-          {relatedPosts.length > 0 && (
-            <div className="mt-12">
-              <h2 className="text-2xl font-bold text-gray-900">Related Articles</h2>
-              <div className="mt-4 space-y-3">
-                {relatedPosts.map((post) => (
-                  <Link
-                    key={post.id}
-                    href={`/blog/${post.slug}`}
-                    className="block rounded-xl border border-gray-100 p-4 hover:bg-primary-50 hover:border-primary-200 transition-colors"
-                  >
-                    <h3 className="font-medium text-gray-900">{post.title}</h3>
-                    {post.excerpt && <p className="mt-1 text-sm text-gray-600 line-clamp-2">{post.excerpt}</p>}
-                  </Link>
-                ))}
+            {relatedModalities.length > 0 && (
+              <div className="mt-12" data-aos="fade-up">
+                <h3>Related Modalities</h3>
+                <div className="mt-4 flex flex-wrap gap-3">
+                  {relatedModalities.map((modality) => (
+                    <Link key={modality.id} href={`/modalities/${modality.slug}`} className="rounded-full border border-primary bg-primary_shade px-4 py-2 text-sm font-medium text-primary hover:bg-primary hover:text-white transition-colors">
+                      {modality.title}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* CTA */}
-          <div className="mt-16 rounded-2xl bg-primary-50 p-8 text-center">
-            <h2 className="text-2xl font-bold text-gray-900">Concerned about your pet?</h2>
-            <p className="mt-2 text-gray-600">Our rehabilitation team can assess your pet and create a personalised treatment plan.</p>
-            <div className="mt-6 flex flex-wrap justify-center gap-4">
-              <Link href="/contact" className="rounded-full bg-accent-500 px-8 py-3 font-semibold text-white hover:bg-accent-600 transition-colors">
-                Book a Consultation
-              </Link>
-              <Link href="/conditions" className="rounded-full border border-primary-500 px-8 py-3 font-semibold text-primary-600 hover:bg-primary-50 transition-colors">
-                View All Conditions
-              </Link>
+            {relatedPosts.length > 0 && (
+              <div className="mt-12" data-aos="fade-up">
+                <h3>Related Articles</h3>
+                <div className="mt-4 space-y-3">
+                  {relatedPosts.map((post) => (
+                    <Link key={post.id} href={`/blog/${post.slug}`} className="block rounded-xl border border-border_one p-4 hover:bg-primary_shade hover:border-primary transition-colors">
+                      <h5 className="!text-base !font-bold">{post.title}</h5>
+                      {post.excerpt && <p className="mt-1 text-sm line-clamp-2">{post.excerpt}</p>}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="mt-16 rounded-2xl bg-primary_shade p-8 text-center" data-aos="fade-up">
+              <h3>Concerned about your pet?</h3>
+              <p className="mt-2">Our rehabilitation team can assess your pet and create a personalised treatment plan.</p>
+              <div className="mt-6 flex flex-wrap justify-center gap-4">
+                <Button text="Book a Consultation" href="/contact" as="link" />
+                <Button text="View All Conditions" href="/conditions" as="link" variant="inverse" />
+              </div>
             </div>
           </div>
         </div>

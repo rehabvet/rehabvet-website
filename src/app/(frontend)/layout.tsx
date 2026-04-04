@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import '../../globals.css'
 import { HeaderServer } from '@/components/HeaderServer'
-import { Footer } from '@/components/Footer'
+import SiteFooter from '@/components/shared/footer'
+import ClientWrapper from '@/components/shared/client-wrapper'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,9 +25,11 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <HeaderServer />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+        <ClientWrapper>
+          <HeaderServer />
+          <main className="min-h-screen">{children}</main>
+          <SiteFooter />
+        </ClientWrapper>
       </body>
     </html>
   )

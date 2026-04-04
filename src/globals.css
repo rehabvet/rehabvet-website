@@ -1,3 +1,91 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply overflow-x-hidden bg-primary_bg font-primary;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-primary font-semibold text-dark transition-all duration-600;
+  }
+  p {
+    @apply text-text_color text-base xl:text-lg font-normal font-primary leading-[20px] xl:leading-[27px];
+  }
+  li {
+    @apply font-primary;
+  }
+  ::selection {
+    @apply bg-primary text-white;
+  }
+  section {
+    @apply overflow-hidden bg-primary_bg py-10 md:py-15 xl:py-20 2xl:py-25 z-10 relative;
+  }
+}
+
+@layer components {
+  h1 {
+    @apply text-4xl lg:text-6xl xl:text-90 font-bold tracking-normal xl:tracking-[-5px];
+  }
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-[1.1] tracking-normal xl:tracking-[-4px];
+  }
+  h3 {
+    @apply text-2xl lg:text-3xl xl:text-40 tracking-[-2px];
+  }
+  h5 {
+    @apply text-lg lg:text-xl xl:text-2xl;
+  }
+  h6 {
+    @apply text-base md:text-lg;
+  }
+  .d2c_nav_link {
+    @apply text-dark font-medium text-lg capitalize hover:text-primary ease-in-out duration-300;
+  }
+  .d2c_social_media {
+    @apply w-[50px] h-[50px] bg-primary/20 rounded-full inline-flex justify-center items-center overflow-hidden text-primary_shade hover:text-primary text-xl xl:text-2xl transition-all duration-300;
+  }
+  .d2c_footer_link {
+    @apply text-primary_shade text-lg font-semibold font-primary capitalize leading-tight hover:text-primary transition-all duration-300;
+  }
+  .d2c_footer_text {
+    @apply text-primary_shade text-xs md:text-sm lg:text-base xl:text-lg font-semibold font-primary capitalize leading-tight;
+  }
+  .d2c_form_label {
+    @apply text-dark text-base lg:text-lg font-semibold font-primary capitalize leading-tight;
+  }
+}
+
+@layer utilities {
+  .nav_link.active {
+    color: #2B8C7E !important;
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fadeInUp {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  .d2c_testimonial_slider .swiper-wrapper {
+    -webkit-transition-timing-function: linear !important;
+    transition-timing-function: linear !important;
+  }
+}

@@ -5,6 +5,9 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { PayloadImage } from '@/components/PayloadImage'
 import type { Service, Condition, BlogPost, Media } from '@/payload-types'
+import SectionHeader from '@/components/shared/section-header'
+import Button from '@/components/shared/primary-button'
+import { FaCheckCircle, FaHeart, FaMedkit } from 'react-icons/fa'
 
 export const dynamic = 'force-dynamic'
 
@@ -14,11 +17,11 @@ export const metadata: Metadata = {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  developmental: 'from-blue-500 to-blue-600',
-  degenerative: 'from-amber-500 to-amber-600',
-  orthopaedic: 'from-emerald-500 to-emerald-600',
-  neurological: 'from-purple-500 to-purple-600',
-  cancer: 'from-rose-400 to-rose-500',
+  developmental: 'bg-blue-500',
+  degenerative: 'bg-amber-500',
+  orthopaedic: 'bg-emerald-500',
+  neurological: 'bg-purple-500',
+  cancer: 'bg-rose-400',
 }
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -29,10 +32,6 @@ const CATEGORY_LABELS: Record<string, string> = {
   cancer: 'Cancer',
 }
 
-function formatDate(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString('en-SG', { year: 'numeric', month: 'long', day: 'numeric' })
-}
-
 const MEDIA_LOGOS = [
   { src: '/images/cna-logo.webp', alt: 'CNA' },
   { src: '/images/rice-media-logo.webp', alt: 'Rice Media' },
@@ -40,6 +39,28 @@ const MEDIA_LOGOS = [
   { src: '/images/today-logo.webp', alt: 'TODAY' },
   { src: '/images/zaobao-logo.webp', alt: 'Zaobao' },
 ]
+
+const FEATURES = [
+  {
+    icon: FaMedkit,
+    title: 'Specialized Care',
+    desc: 'Evidence-based rehabilitation protocols tailored to each patient\'s unique needs.',
+  },
+  {
+    icon: FaCheckCircle,
+    title: 'Evidence-Based',
+    desc: 'Our treatments follow the latest veterinary research and proven methodologies.',
+  },
+  {
+    icon: FaHeart,
+    title: 'Compassionate Team',
+    desc: 'Dedicated veterinarians and therapists who truly care about your pet\'s wellbeing.',
+  },
+]
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString('en-SG', { year: 'numeric', month: 'long', day: 'numeric' })
+}
 
 export default async function HomePage() {
   let services: Service[] = []
@@ -58,7 +79,6 @@ export default async function HomePage() {
     latestPosts = postsResult.docs
   } catch {}
 
-  // Group conditions by category with counts
   const conditionCategories = Object.entries(
     conditions.reduce<Record<string, number>>((acc, c) => {
       acc[c.category] = (acc[c.category] || 0) + 1
@@ -72,8 +92,7 @@ export default async function HomePage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="relative min-h-[85vh] flex items-center overflow-hidden">
-        {/* Background image */}
+      <section className="!py-0 relative min-h-[85vh] flex items-center overflow-hidden">
         <Image
           src="/images/hero-bg.webp"
           alt="RehabVet clinic"
@@ -82,54 +101,66 @@ export default async function HomePage() {
           className="object-cover object-center"
           sizes="100vw"
         />
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/55 to-black/30" />
-
-        <div className="relative z-10 mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
+        <div className="absolute inset-0 bg-gradient-to-r from-dark/80 via-dark/60 to-dark/30" />
+        <div className="relative z-10 container py-24 sm:py-32">
           <div className="max-w-2xl">
-            <p className="text-sm font-bold uppercase tracking-widest text-primary-400 mb-4">
-              Singapore&apos;s #1 Vet Rehab Clinic
-            </p>
-            <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl leading-tight">
-              Singapore&apos;s first &amp; trusted Veterinary Rehabilitation, Physiotherapy and Hydrotherapy Clinic.
+            <div className="flex items-center gap-2 mb-4" data-aos="fade-up">
+              <div className="h-[2px] w-10 bg-primary" />
+              <p className="text-sm font-bold uppercase tracking-widest text-primary">
+                Singapore&apos;s #1 Vet Rehab Clinic
+              </p>
+            </div>
+            <h1 className="animateText text-white !tracking-[-3px] lg:!tracking-[-4px]">
+              Veterinary Rehabilitation &amp; Physiotherapy
             </h1>
-            <p className="mt-6 text-lg leading-8 text-white/80">
+            <p className="mt-6 text-lg leading-8 text-white/80" data-aos="fade-up" data-aos-delay={300}>
               Helping your pets recover, move, and thrive with Singapore&apos;s most comprehensive range of animal rehabilitation modalities.
             </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link
-                href="/contact"
-                className="rounded-full bg-accent-500 px-8 py-3.5 text-base font-bold text-white shadow-lg hover:bg-accent-600 hover:shadow-xl transition-all"
-              >
-                Book Now
-              </Link>
-              <Link
-                href="/about#vets"
-                className="rounded-full border-2 border-white/80 px-8 py-3.5 text-base font-bold text-white hover:bg-white hover:text-gray-900 transition-all"
-              >
-                For Vets
-              </Link>
+            <div className="mt-10 flex flex-wrap gap-4" data-aos="fade-up" data-aos-delay={500}>
+              <Button text="Book Now" href="/contact" as="link" />
+              <Button text="For Vets" href="/about#vets" as="link" variant="inverse" className="!text-white !border-white/50 hover:!text-dark" />
             </div>
           </div>
         </div>
       </section>
 
       {/* ── As Featured In ── */}
-      <section className="bg-gray-900 py-10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-xs font-bold uppercase tracking-widest text-primary-400 mb-8">
+      <section className="!bg-dark !py-10">
+        <div className="container">
+          <p className="text-center text-xs font-bold uppercase tracking-widest text-primary mb-8">
             As Featured In and Trusted Partners
           </p>
           <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
             {MEDIA_LOGOS.map((logo) => (
-              <div key={logo.alt} className="relative h-8 w-28 sm:h-10 sm:w-32 grayscale brightness-200 hover:grayscale-0 hover:brightness-100 transition-all">
-                <Image
-                  src={logo.src}
-                  alt={logo.alt}
-                  fill
-                  className="object-contain"
-                  sizes="(max-width: 640px) 112px, 128px"
-                />
+              <div key={logo.alt} className="relative h-8 w-28 sm:h-10 sm:w-32 grayscale brightness-200 hover:grayscale-0 hover:brightness-100 transition-all" data-aos="fade-up">
+                <Image src={logo.src} alt={logo.alt} fill className="object-contain" sizes="128px" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Features ── */}
+      <section>
+        <div className="container">
+          <SectionHeader
+            className="text-center mb-10 lg:mb-16"
+            subtitle="Why RehabVet"
+            title="Expert Care for Your Pet"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {FEATURES.map((feat, i) => (
+              <div
+                key={feat.title}
+                className="d2c_service_card bg-white rounded-2xl p-8 lg:p-10 border border-border_one hover:border-primary hover:shadow-lg transition-all duration-300 text-center space-y-4"
+                data-aos="zoom-in"
+                data-aos-delay={200 + i * 150}
+              >
+                <div className="w-16 h-16 mx-auto rounded-full bg-primary_shade flex items-center justify-center text-primary text-2xl">
+                  <feat.icon />
+                </div>
+                <h5 className="!font-bold">{feat.title}</h5>
+                <p>{feat.desc}</p>
               </div>
             ))}
           </div>
@@ -137,143 +168,124 @@ export default async function HomePage() {
       </section>
 
       {/* ── About / Purpose ── */}
-      <section className="py-20 bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <p className="text-xs font-bold uppercase tracking-widest text-accent-500 mb-3">About Us</p>
-            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl" style={{ color: '#303030' }}>
-              RehabVet&apos;s Purpose
-            </h2>
-            <div className="mt-4 h-1 w-16 bg-primary-500 mx-auto rounded-full" />
-            <p className="mt-8 text-lg leading-relaxed" style={{ color: '#303030' }}>
-              <strong>REHABVET CLINIC</strong> is Singapore&apos;s first full-fledged animal rehabilitation clinic.
-              With our team of well-trained and experienced veterinarians and therapists, the comprehensive facility
-              offers the widest range of rehabilitation modalities to all animals.
-            </p>
-            <div className="mt-10">
-              <Link
-                href="/contact"
-                className="inline-block rounded-full bg-accent-500 px-8 py-3.5 text-base font-bold text-white shadow hover:bg-accent-600 transition-all"
-              >
-                Make An Appointment — For Pet Owners
-              </Link>
+      <section className="!bg-white">
+        <div className="container">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            <div className="relative rounded-2xl overflow-hidden h-[350px] lg:h-[450px]" data-aos="fade-right">
+              <Image src="/images/hero-bg.webp" alt="RehabVet clinic interior" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+            </div>
+            <div className="space-y-6" data-aos="fade-left">
+              <SectionHeader
+                className="text-left"
+                subtitle="About Us"
+                title="RehabVet's Purpose"
+                subtitleClass="!justify-start"
+              />
+              <p className="text-lg leading-relaxed">
+                <strong>REHABVET CLINIC</strong> is Singapore&apos;s first full-fledged animal rehabilitation clinic.
+                With our team of well-trained and experienced veterinarians and therapists, the comprehensive facility
+                offers the widest range of rehabilitation modalities to all animals.
+              </p>
+              <Button text="Make An Appointment" href="/contact" as="link" />
             </div>
           </div>
         </div>
       </section>
 
       {/* ── Services ── */}
-      <section className="py-20 bg-gray-50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <p className="text-xs font-bold uppercase tracking-widest text-accent-500 mb-3">What We Do</p>
-            <h2 className="text-3xl font-extrabold sm:text-4xl" style={{ color: '#303030' }}>
-              Expert Rehabilitation Services for Pets
-            </h2>
-            <div className="mt-4 h-1 w-16 bg-primary-500 mx-auto rounded-full" />
-          </div>
+      <section>
+        <div className="container">
+          <SectionHeader
+            className="text-center mb-10 lg:mb-16"
+            subtitle="What We Do"
+            title="Expert Rehabilitation Services"
+          />
           {services.length > 0 ? (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {services.map((service) => (
+              {services.slice(0, 6).map((service, i) => (
                 <Link
                   key={service.id}
                   href={`/services/${service.slug}`}
-                  className="group rounded-2xl bg-white overflow-hidden shadow-sm hover:shadow-xl border border-gray-100 hover:border-primary-300 transition-all"
+                  className="d2c_service_card group rounded-2xl bg-white overflow-hidden border border-border_one hover:border-primary hover:shadow-lg transition-all duration-300"
+                  data-aos="zoom-in"
+                  data-aos-delay={200 + i * 100}
                 >
-                  <div className="relative h-48 overflow-hidden bg-primary-50">
+                  <div className="relative h-48 overflow-hidden bg-primary_shade">
                     <PayloadImage
                       media={service.heroImage as Media}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="group-hover:scale-105 transition-transform duration-300"
+                      className="group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold group-hover:text-primary-600 transition-colors" style={{ color: '#303030' }}>
+                  <div className="p-6 space-y-2">
+                    <h5 className="!font-bold group-hover:text-primary transition-colors">
                       {service.title}
-                    </h3>
+                    </h5>
                     {service.excerpt && (
-                      <p className="mt-2 text-sm text-gray-600 line-clamp-2">{service.excerpt}</p>
+                      <p className="text-sm line-clamp-2">{service.excerpt}</p>
                     )}
-                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-accent-500 group-hover:text-accent-600">
-                      Learn more <span aria-hidden="true">&rarr;</span>
+                    <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary">
+                      Learn more &rarr;
                     </span>
                   </div>
                 </Link>
               ))}
             </div>
           ) : (
-            // Fallback: static service tiles when CMS is empty
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-              {[
-                'Physiotherapy', 'Hydrotherapy', 'Acupuncture', 'Hyperbaric Oxygen Treatment',
-                'Rehabilitation', 'Hydro Treadmill', 'Traditional Chinese Medicine',
-                'Manual Therapy', 'Electrical Therapy', 'Therapeutic Laser',
-              ].map((name) => (
-                <div key={name} className="rounded-2xl bg-white border border-primary-200 p-6 text-center hover:border-primary-400 hover:shadow-md transition-all">
-                  <p className="font-semibold text-sm" style={{ color: '#303030' }}>{name}</p>
+              {['Physiotherapy', 'Hydrotherapy', 'Acupuncture', 'HBOT', 'Rehabilitation', 'Hydro Treadmill', 'TCM', 'Manual Therapy', 'Electrical Therapy', 'Therapeutic Laser'].map((name, i) => (
+                <div key={name} className="rounded-2xl bg-white border border-border_one p-6 text-center hover:border-primary hover:shadow-md transition-all" data-aos="fade-up" data-aos-delay={100 + i * 50}>
+                  <p className="font-semibold text-sm text-dark">{name}</p>
                 </div>
               ))}
             </div>
           )}
-          {services.length > 0 && (
-            <div className="mt-12 text-center">
-              <Link href="/services" className="inline-flex items-center gap-2 font-bold text-accent-500 hover:text-accent-600 transition-colors">
-                View all services <span aria-hidden="true">&rarr;</span>
-              </Link>
-            </div>
-          )}
+          <div className="mt-12 text-center" data-aos="fade-up">
+            <Button text="View All Services" href="/services" as="link" variant="inverse" />
+          </div>
         </div>
       </section>
 
       {/* ── Team ── */}
-      <section className="py-20 bg-primary-500">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-xs font-bold uppercase tracking-widest text-primary-900/60 mb-3">Our People</p>
-          <h2 className="text-3xl font-extrabold text-primary-900 sm:text-4xl">
-            Meet The RehabVet Team
-          </h2>
-          <p className="mt-4 text-lg text-primary-900/70 max-w-2xl mx-auto">
+      <section className="!bg-primary">
+        <div className="container text-center">
+          <h6 className="!text-primary-900/60 mb-3" data-aos="fade-up">Our People</h6>
+          <h2 className="!text-white" data-aos="fade-up" data-aos-delay={200}>Meet The RehabVet Team</h2>
+          <p className="mt-4 text-lg text-white/80 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay={300}>
             Our dedicated veterinarians and therapists bring years of specialised experience to every patient.
           </p>
-          <div className="mt-10">
-            <Link
-              href="/about"
-              className="inline-block rounded-full bg-primary-900 px-8 py-3.5 text-base font-bold text-white hover:bg-primary-800 transition-all"
-            >
-              Meet the Team
-            </Link>
+          <div className="mt-10" data-aos="fade-up" data-aos-delay={400}>
+            <Button text="Meet the Team" href="/about" as="link" className="!bg-dark !border-dark !text-white hover:!bg-white hover:!text-dark hover:!border-white" />
           </div>
         </div>
       </section>
 
       {/* ── Conditions ── */}
       {conditionCategories.length > 0 && (
-        <section className="py-20 bg-white">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-14">
-              <p className="text-xs font-bold uppercase tracking-widest text-accent-500 mb-3">What We Treat</p>
-              <h2 className="text-3xl font-extrabold sm:text-4xl" style={{ color: '#303030' }}>
-                Common Conditions In Singapore Pets That Require Rehabilitation
-              </h2>
-              <div className="mt-4 h-1 w-16 bg-primary-500 mx-auto rounded-full" />
-            </div>
+        <section className="!bg-white">
+          <div className="container">
+            <SectionHeader
+              className="text-center mb-10 lg:mb-16"
+              subtitle="What We Treat"
+              title="Common Conditions We Rehabilitate"
+            />
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-              {conditionCategories.map(([cat, count]) => (
+              {conditionCategories.map(([cat, count], i) => (
                 <Link
                   key={cat}
                   href="/conditions"
-                  className={`bg-gradient-to-br ${CATEGORY_COLORS[cat] || 'from-gray-500 to-gray-600'} rounded-2xl p-6 text-white hover:shadow-lg hover:scale-[1.02] transition-all`}
+                  className={`${CATEGORY_COLORS[cat] || 'bg-gray-500'} rounded-2xl p-6 text-white hover:shadow-lg hover:scale-[1.02] transition-all`}
+                  data-aos="zoom-in"
+                  data-aos-delay={200 + i * 100}
                 >
-                  <h3 className="font-bold text-lg">{CATEGORY_LABELS[cat] || cat}</h3>
+                  <h5 className="!text-white !font-bold">{CATEGORY_LABELS[cat] || cat}</h5>
                   <p className="mt-1 text-sm opacity-90">{count} condition{count !== 1 ? 's' : ''}</p>
                 </Link>
               ))}
             </div>
-            <div className="mt-10 text-center">
-              <Link href="/conditions" className="inline-flex items-center gap-2 font-bold text-accent-500 hover:text-accent-600 transition-colors">
-                View all conditions <span aria-hidden="true">&rarr;</span>
-              </Link>
+            <div className="mt-10 text-center" data-aos="fade-up">
+              <Button text="View All Conditions" href="/conditions" as="link" variant="inverse" />
             </div>
           </div>
         </section>
@@ -281,44 +293,45 @@ export default async function HomePage() {
 
       {/* ── Blog ── */}
       {latestPosts.length > 0 && (
-        <section className="py-20 bg-gray-50">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex items-end justify-between mb-12">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-accent-500 mb-2">Latest Articles</p>
-                <h2 className="text-3xl font-extrabold sm:text-4xl" style={{ color: '#303030' }}>RehabVet Blogs</h2>
-                <div className="mt-3 h-1 w-16 bg-primary-500 rounded-full" />
-              </div>
-              <Link href="/blog" className="hidden sm:inline-flex items-center gap-1 font-bold text-accent-500 hover:text-accent-600 transition-colors">
-                View all posts &rarr;
-              </Link>
+        <section>
+          <div className="container">
+            <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-10 lg:mb-16 gap-4">
+              <SectionHeader
+                className="text-left"
+                subtitle="Latest Articles"
+                title="RehabVet Blog"
+                subtitleClass="!justify-start"
+              />
+              <Button text="View All Posts" href="/blog" as="link" variant="inverse" className="hidden sm:inline-flex" />
             </div>
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {latestPosts.map((post) => (
+              {latestPosts.map((post, i) => (
                 <Link
                   key={post.id}
                   href={`/blog/${post.slug}`}
-                  className="group flex flex-col rounded-2xl bg-white shadow-sm overflow-hidden hover:shadow-xl transition-all border border-gray-100"
+                  className="d2c_blog_card group flex flex-col rounded-2xl bg-white border border-border_one overflow-hidden hover:border-primary hover:shadow-lg transition-all duration-300"
+                  data-aos="zoom-in"
+                  data-aos-delay={200 + i * 100}
                 >
-                  <div className="relative h-48 overflow-hidden bg-primary-50">
+                  <div className="relative h-48 overflow-hidden bg-primary_shade">
                     <PayloadImage
                       media={post.featuredImage as Media}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="group-hover:scale-105 transition-transform duration-300"
+                      className="group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     {post.categories && post.categories.length > 0 && (
-                      <span className="mb-2 inline-block self-start rounded-full bg-primary-100 px-3 py-0.5 text-xs font-bold text-primary-700">
+                      <span className="mb-2 inline-block self-start rounded-full bg-primary_shade px-3 py-0.5 text-xs font-bold text-primary">
                         {post.categories[0].replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
                       </span>
                     )}
-                    <h3 className="text-base font-bold group-hover:text-accent-500 transition-colors line-clamp-2" style={{ color: '#303030' }}>
+                    <h5 className="!text-lg !font-bold group-hover:text-primary transition-colors line-clamp-2">
                       {post.title}
-                    </h3>
+                    </h5>
                     {post.excerpt && (
-                      <p className="mt-2 flex-1 text-sm text-gray-600 line-clamp-3">{post.excerpt}</p>
+                      <p className="mt-2 flex-1 text-sm line-clamp-3">{post.excerpt}</p>
                     )}
                     <div className="mt-4 flex items-center justify-between text-xs text-gray-400">
                       {post.author && <span>{post.author}</span>}
@@ -329,47 +342,33 @@ export default async function HomePage() {
               ))}
             </div>
             <div className="mt-8 text-center sm:hidden">
-              <Link href="/blog" className="font-bold text-accent-500 hover:text-accent-600">
-                View all posts &rarr;
-              </Link>
+              <Button text="View All Posts" href="/blog" as="link" variant="inverse" />
             </div>
           </div>
         </section>
       )}
 
       {/* ── Bottom CTA ── */}
-      <section className="py-20 bg-gray-900">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
-            Proven steps to pain free mobility.
-          </h2>
-          <p className="mt-4 text-lg text-gray-400 max-w-2xl mx-auto">
+      <section className="!bg-dark">
+        <div className="container text-center">
+          <h2 className="animateText !text-white">Proven steps to pain free mobility.</h2>
+          <p className="mt-4 text-lg text-gray-400 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay={300}>
             Let our specialists build a personalised rehabilitation plan for your pet today.
           </p>
-          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 max-w-2xl mx-auto">
-            <div className="rounded-2xl bg-gray-800 p-8">
-              <h3 className="text-xl font-bold text-primary-400 mb-3">Our Services</h3>
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay={500}>
+            <div className="rounded-2xl bg-dark border border-border_one p-8">
+              <h5 className="!text-primary !font-bold mb-3">Our Services</h5>
               <p className="text-gray-400 text-sm mb-6">
                 Explore our full range of veterinary rehabilitation modalities.
               </p>
-              <Link
-                href="/services"
-                className="inline-block rounded-full border-2 border-primary-400 px-6 py-2.5 text-sm font-bold text-primary-400 hover:bg-primary-400 hover:text-gray-900 transition-all"
-              >
-                View Services
-              </Link>
+              <Button text="View Services" href="/services" as="link" variant="inverse" className="!text-primary !border-primary hover:!text-white" />
             </div>
-            <div className="rounded-2xl bg-accent-500 p-8">
-              <h3 className="text-xl font-bold text-white mb-3">Contact Us</h3>
+            <div className="rounded-2xl bg-accent p-8">
+              <h5 className="!text-white !font-bold mb-3">Contact Us</h5>
               <p className="text-white/80 text-sm mb-6">
                 Book an appointment or reach out — we&apos;re here to help.
               </p>
-              <Link
-                href="/contact"
-                className="inline-block rounded-full bg-white px-6 py-2.5 text-sm font-bold text-accent-600 hover:bg-gray-100 transition-all"
-              >
-                Book Appointment
-              </Link>
+              <Button text="Book Appointment" href="/contact" as="link" className="!bg-white !border-white !text-accent hover:!bg-primary_shade" />
             </div>
           </div>
         </div>
