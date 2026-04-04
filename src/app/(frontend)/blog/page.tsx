@@ -2,67 +2,74 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { PayloadImage } from '@/components/PayloadImage'
+import type { BlogPost, Media } from '@/payload-types'
 
 export const metadata: Metadata = {
   title: 'Blog',
   description: 'Expert advice, rehabilitation tips, and pet health articles from the RehabVet team.',
 }
 
-const defaultPosts = [
-  {
-    title: 'Understanding Canine Hip Dysplasia: Signs, Diagnosis & Rehabilitation',
-    slug: 'understanding-canine-hip-dysplasia',
-    excerpt:
-      'Hip dysplasia is one of the most common developmental conditions in dogs. Learn how to spot the signs early and how rehabilitation can dramatically improve quality of life.',
-    category: 'Education',
-    author: 'Dr. Sarah Mitchell',
-    publishedDate: '2024-03-15',
-  },
-  {
-    title: 'The Benefits of Hydrotherapy for Post-Surgical Recovery',
-    slug: 'hydrotherapy-post-surgical-recovery',
-    excerpt:
-      'Underwater treadmill therapy offers unparalleled advantages for pets recovering from orthopaedic surgery. We explore the science behind buoyancy and resistance.',
-    category: 'Hydrotherapy',
-    author: 'Dr. James Thornton',
-    publishedDate: '2024-02-28',
-  },
-  {
-    title: 'Life After Cruciate Repair: A Guide to TPLO Rehabilitation',
-    slug: 'tplo-rehabilitation-guide',
-    excerpt:
-      'A successful TPLO outcome depends as much on post-operative rehabilitation as it does on surgical technique. Here is what to expect at each stage of recovery.',
-    category: 'Orthopaedic',
-    author: 'Dr. Sarah Mitchell',
-    publishedDate: '2024-01-20',
-  },
-]
-
-const categories = ['All', 'Education', 'Hydrotherapy', 'Orthopaedic', 'Neurological', 'Nutrition', 'Cancer']
-
-function formatDate(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })
+const CATEGORY_LABELS: Record<string, string> = {
+  'pet-rehabilitation': 'Pet Rehabilitation',
+  'animal-physiotherapy': 'Animal Physiotherapy',
+  'hydrotherapy': 'Hydrotherapy',
+  'acupuncture': 'Acupuncture',
+  'cost-pricing': 'Cost & Pricing',
+  'diet-weight': 'Diet & Weight',
+  'luxating-patella': 'Luxating Patella',
+  'neurology': 'Neurology',
+  'tcvm': 'TCVM',
+  'general': 'General',
 }
 
-export default async function BlogPage() {
-  let posts: any[] = []
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString('en-SG', { year: 'numeric', month: 'long', day: 'numeric' })
+}
+
+export default async function BlogPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string; category?: string }>
+}) {
+  const { page: pageParam, category } = await searchParams
+  const currentPage = Math.max(1, parseInt(pageParam || '1', 10))
+  const perPage = 12
+
+  let posts: BlogPost[] = []
+  let totalPages = 1
+  let allCategories: string[] = []
+
   try {
     const payload = await getPayload({ config })
+
+    const where: { categories?: { contains: string } } = {}
+    if (category && category !== 'all') {
+      where.categories = { contains: category }
+    }
+
     const result = await payload.find({
       collection: 'blog-posts',
-      limit: 50,
-      sort: '-publishedDate',
+      limit: perPage,
+      page: currentPage,
+      sort: '-date',
+      where,
     })
     posts = result.docs
-  } catch {
-    // DB not available yet
-  }
+    totalPages = result.totalPages
 
-  const displayPosts = posts.length > 0 ? posts : defaultPosts
+    // Get all unique categories
+    const allPosts = await payload.find({ collection: 'blog-posts', limit: 200, select: { categories: true } })
+    const catSet = new Set<string>()
+    allPosts.docs.forEach((p) => {
+      p.categories?.forEach((c) => catSet.add(c))
+    })
+    allCategories = Array.from(catSet).sort()
+  } catch {}
 
   return (
     <>
-      <section className="bg-gradient-to-br from-primary-700 to-primary-500 py-20 text-white">
+      <section className="bg-gradient-to-br from-primary-800 via-primary-600 to-primary-500 py-20 text-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold sm:text-5xl">RehabVet Blog</h1>
           <p className="mt-4 max-w-2xl text-lg text-primary-100">
@@ -71,66 +78,120 @@ export default async function BlogPage() {
         </div>
       </section>
 
-      <section className="border-b border-gray-100 bg-white py-6 sticky top-0 z-10 shadow-sm">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      {/* Category Filter */}
+      {allCategories.length > 0 && (
+        <section className="border-b border-gray-100 bg-white py-4">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-wrap gap-2">
-              {categories.map((cat) => (
-                <button
+              <Link
+                href="/blog"
+                className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+                  !category || category === 'all'
+                    ? 'bg-primary-600 text-white'
+                    : 'border border-gray-200 text-gray-600 hover:border-primary-300 hover:text-primary-600'
+                }`}
+              >
+                All
+              </Link>
+              {allCategories.map((cat) => (
+                <Link
                   key={cat}
-                  type="button"
+                  href={`/blog?category=${cat}`}
                   className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
-                    cat === 'All'
-                      ? 'bg-primary-500 text-white'
+                    category === cat
+                      ? 'bg-primary-600 text-white'
                       : 'border border-gray-200 text-gray-600 hover:border-primary-300 hover:text-primary-600'
                   }`}
                 >
-                  {cat}
-                </button>
-              ))}
-            </div>
-            <input
-              type="search"
-              placeholder="Search articles..."
-              className="rounded-full border border-gray-200 px-4 py-2 text-sm text-gray-700 placeholder-gray-400 focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 sm:w-64"
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {displayPosts.length === 0 ? (
-            <p className="text-center text-gray-500 py-16">No posts yet. Check back soon!</p>
-          ) : (
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {displayPosts.map((post: any) => (
-                <Link
-                  key={post.slug}
-                  href={`/blog/${post.slug}`}
-                  className="group flex flex-col rounded-2xl border border-gray-100 bg-white shadow-sm hover:shadow-lg hover:border-primary-200 transition-all overflow-hidden"
-                >
-                  <div className="h-48 bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-                    <span className="text-5xl">📝</span>
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    {post.category && (
-                      <span className="mb-2 inline-block rounded-full bg-primary-50 px-3 py-0.5 text-xs font-medium text-primary-700">
-                        {post.category}
-                      </span>
-                    )}
-                    <h2 className="text-lg font-semibold text-gray-900 group-hover:text-primary-500 transition-colors line-clamp-2">
-                      {post.title}
-                    </h2>
-                    <p className="mt-2 flex-1 text-sm text-gray-600 line-clamp-3">{post.excerpt}</p>
-                    <div className="mt-4 flex items-center justify-between text-xs text-gray-400">
-                      <span>{post.author}</span>
-                      {post.publishedDate && <span>{formatDate(post.publishedDate)}</span>}
-                    </div>
-                  </div>
+                  {CATEGORY_LABELS[cat] || cat}
                 </Link>
               ))}
             </div>
+          </div>
+        </section>
+      )}
+
+      <section className="py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {posts.length === 0 ? (
+            <p className="text-center text-gray-500 py-16">No posts yet. Check back soon!</p>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                {posts.map((post) => (
+                  <Link
+                    key={post.id}
+                    href={`/blog/${post.slug}`}
+                    className="group flex flex-col rounded-2xl border border-gray-100 bg-white shadow-sm hover:shadow-lg hover:border-primary-200 transition-all overflow-hidden"
+                  >
+                    <div className="relative h-48 overflow-hidden">
+                      <PayloadImage
+                        media={post.featuredImage as Media}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                    <div className="flex flex-1 flex-col p-6">
+                      {post.categories && post.categories.length > 0 && (
+                        <div className="mb-2 flex flex-wrap gap-1">
+                          {post.categories.slice(0, 2).map((cat) => (
+                            <span key={cat} className="inline-block rounded-full bg-primary-50 px-2.5 py-0.5 text-xs font-medium text-primary-700">
+                              {CATEGORY_LABELS[cat] || cat}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      <h2 className="text-lg font-semibold text-gray-900 group-hover:text-primary-600 transition-colors line-clamp-2">
+                        {post.title}
+                      </h2>
+                      {post.excerpt && (
+                        <p className="mt-2 flex-1 text-sm text-gray-600 line-clamp-3">{post.excerpt}</p>
+                      )}
+                      <div className="mt-4 flex items-center justify-between text-xs text-gray-400">
+                        {post.author && <span>{post.author}</span>}
+                        <span>{formatDate(post.date)}</span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <nav className="mt-12 flex justify-center gap-2" aria-label="Pagination">
+                  {currentPage > 1 && (
+                    <Link
+                      href={`/blog?page=${currentPage - 1}${category ? `&category=${category}` : ''}`}
+                      className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-primary-50 transition-colors"
+                    >
+                      Previous
+                    </Link>
+                  )}
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                    <Link
+                      key={p}
+                      href={`/blog?page=${p}${category ? `&category=${category}` : ''}`}
+                      className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                        p === currentPage
+                          ? 'bg-primary-600 text-white'
+                          : 'border border-gray-200 text-gray-700 hover:bg-primary-50'
+                      }`}
+                    >
+                      {p}
+                    </Link>
+                  ))}
+                  {currentPage < totalPages && (
+                    <Link
+                      href={`/blog?page=${currentPage + 1}${category ? `&category=${category}` : ''}`}
+                      className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-primary-50 transition-colors"
+                    >
+                      Next
+                    </Link>
+                  )}
+                </nav>
+              )}
+            </>
           )}
         </div>
       </section>
@@ -143,7 +204,7 @@ export default async function BlogPage() {
           </p>
           <Link
             href="/contact"
-            className="mt-8 inline-block rounded-full bg-coral-400 px-8 py-3 font-semibold text-white hover:bg-coral-600 transition-colors"
+            className="mt-8 inline-block rounded-full bg-coral-500 px-8 py-3 font-semibold text-white hover:bg-coral-600 transition-colors"
           >
             Contact Us
           </Link>

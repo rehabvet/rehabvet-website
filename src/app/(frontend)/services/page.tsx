@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { PayloadImage } from '@/components/PayloadImage'
+import type { Service, Media } from '@/payload-types'
 
 export const metadata: Metadata = {
   title: 'Services',
@@ -9,31 +11,16 @@ export const metadata: Metadata = {
 }
 
 export default async function ServicesPage() {
-  let services: any[] = []
+  let services: Service[] = []
   try {
     const payload = await getPayload({ config })
     const result = await payload.find({ collection: 'services', limit: 50, sort: 'title' })
     services = result.docs
-  } catch {
-    // DB not available yet
-  }
-
-  const defaultServices = [
-    { title: 'Rehab Consultation', slug: 'rehab-consultation', excerpt: 'Comprehensive assessment and personalised rehabilitation plans.', icon: '🏥' },
-    { title: 'Physiotherapy', slug: 'physiotherapy', excerpt: 'Targeted exercises and manual therapy to restore mobility.', icon: '💪' },
-    { title: 'Hydrotherapy', slug: 'hydrotherapy', excerpt: 'Underwater treadmill therapy for low-impact recovery.', icon: '🏊' },
-    { title: 'Hyperbaric Oxygen Therapy', slug: 'hbot', excerpt: 'Accelerate healing with pressurised oxygen treatment.', icon: '🫧' },
-    { title: 'Acupuncture', slug: 'acupuncture', excerpt: 'Traditional techniques for pain relief and natural healing.', icon: '📍' },
-    { title: 'TCVM', slug: 'tcvm', excerpt: 'Traditional Chinese Veterinary Medicine for holistic care.', icon: '🌿' },
-    { title: 'Chiropractic', slug: 'chiropractic', excerpt: 'Spinal adjustments for improved mobility and function.', icon: '🦴' },
-    { title: 'Animal Rehabilitation', slug: 'animal-rehabilitation', excerpt: 'Complete rehabilitation programs for post-surgical and chronic conditions.', icon: '🐕' },
-  ]
-
-  const displayServices = services.length > 0 ? services : defaultServices
+  } catch {}
 
   return (
     <>
-      <section className="bg-gradient-to-br from-primary-700 to-primary-500 py-20 text-white">
+      <section className="bg-gradient-to-br from-primary-800 via-primary-600 to-primary-500 py-20 text-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold sm:text-5xl">Our Services</h1>
           <p className="mt-4 max-w-2xl text-lg text-primary-100">
@@ -44,24 +31,39 @@ export default async function ServicesPage() {
 
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {displayServices.map((service: any) => (
-              <Link
-                key={service.slug}
-                href={`/services/${service.slug}`}
-                className="group rounded-2xl border border-gray-100 bg-white p-8 shadow-sm hover:shadow-lg hover:border-primary-200 transition-all"
-              >
-                <span className="text-4xl">{service.icon || '🩺'}</span>
-                <h2 className="mt-4 text-xl font-semibold text-gray-900 group-hover:text-primary-500 transition-colors">
-                  {service.title}
-                </h2>
-                <p className="mt-2 text-gray-600">{service.excerpt || ''}</p>
-                <span className="mt-4 inline-block text-sm font-medium text-primary-500 group-hover:text-primary-700">
-                  Learn more &rarr;
-                </span>
-              </Link>
-            ))}
-          </div>
+          {services.length === 0 ? (
+            <p className="text-center text-gray-500 py-16">No services available yet. Check back soon.</p>
+          ) : (
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {services.map((service) => (
+                <Link
+                  key={service.id}
+                  href={`/services/${service.slug}`}
+                  className="group rounded-2xl border border-gray-100 bg-white overflow-hidden shadow-sm hover:shadow-lg hover:border-primary-200 transition-all"
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <PayloadImage
+                      media={service.heroImage as Media}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h2 className="text-xl font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">
+                      {service.title}
+                    </h2>
+                    {service.excerpt && (
+                      <p className="mt-2 text-gray-600 line-clamp-3">{service.excerpt}</p>
+                    )}
+                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary-600 group-hover:text-primary-700">
+                      Learn more <span aria-hidden="true">&rarr;</span>
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </>
