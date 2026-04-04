@@ -12,43 +12,43 @@ export const metadata: Metadata = {
 const MODALITIES = [
   {
     title: 'Manual Therapy',
-    slug: 'manual-therapy',
+    slug: 'manual-therapy-dog-cat',
     excerpt:
       'Manual therapy is a type of physical therapy that uses hands-on techniques to help improve the mobility and function of dogs and cats.',
   },
   {
     title: 'Physical Therapy',
-    slug: 'physical-therapy',
+    slug: 'physical-therapy-dogs-cats',
     excerpt:
       'Physical therapy for dogs is a service that provides rehabilitative care to help improve mobility and reduce pain.',
   },
   {
     title: 'Class 4 Therapeutic Laser',
-    slug: 'class-4-therapeutic-laser',
+    slug: 'class-4-theraputic-laser-for-dogs-and-cats',
     excerpt:
       'This class 4 therapeutic laser is designed to provide relief to dogs and cats suffering from a variety of ailments.',
   },
   {
     title: 'Electrical Therapy',
-    slug: 'electrical-therapy',
+    slug: 'electrical-therapy-tens-nmes-for-dogs-and-cats',
     excerpt:
       'This service provides electrical therapy, such as TENS and NMES, for both cats and dogs. It is a great way to help improve the health.',
   },
   {
     title: 'Ultrasound Therapy',
-    slug: 'ultrasound-therapy',
+    slug: 'ultrasound-therapy-for-dogs-and-cats',
     excerpt:
       'Ultrasound Therapy is a non-invasive treatment for dogs and cats which uses sound waves to reduce pain and inflammation.',
   },
   {
     title: 'Extracorporeal Shockwave Therapy',
-    slug: 'extracorporeal-shockwave-therapy',
+    slug: 'extracorporeal-shockwave-therapy-eswt-for-animals',
     excerpt:
       'Extracorporeal Shockwave Therapy (ESWT) is a non-invasive treatment for dogs which uses sound waves to help reduce pain.',
   },
   {
     title: 'TCVM Tui Na',
-    slug: 'tcvm-tui-na',
+    slug: 'tcvm-tui-na-for-dogs-and-cats',
     excerpt:
       'Tui-Na is a traditional Chinese massage therapy specifically tailored for dogs, providing a holistic approach to their wellbeing.',
   },
@@ -60,7 +60,7 @@ const MODALITIES = [
   },
   {
     title: 'Proprioception Exercises',
-    slug: 'proprioception-exercises',
+    slug: 'canine-rehabilitation-proprioception-exercises',
     excerpt:
       'We offer canine proprioception exercises to help dogs with nerve damage improve their mobility. Our service is tailored to the individual needs.',
   },
