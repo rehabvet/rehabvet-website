@@ -33,8 +33,7 @@ export default async function ContactPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold sm:text-5xl">Contact Us</h1>
           <p className="mt-4 max-w-2xl text-lg text-primary-100">
-            We&apos;d love to hear from you. Book a consultation, ask a question, or find out how we
-            can help your pet.
+            If you have any questions regarding our services, products or company, please fill up the enquiry form and we will get back to you shortly.
           </p>
         </div>
       </section>
@@ -44,9 +43,9 @@ export default async function ContactPage() {
           <div className="grid grid-cols-1 gap-16 lg:grid-cols-2">
             {/* Contact Form */}
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">Send us a message</h2>
+              <h2 className="text-2xl font-bold text-gray-900">Send Us Your Enquiry</h2>
               <p className="mt-2 text-gray-600">
-                Fill in the form below and we&apos;ll get back to you within one business day.
+                Fill in the form below and we&apos;ll get back to you shortly.
               </p>
 
               <form action="#" method="POST" className="mt-8 space-y-6">
@@ -248,7 +247,7 @@ export default async function ContactPage() {
                   style={{ border: 0 }}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&q=513+Serangoon+Road+Singapore+218154"
+                  src="https://maps.google.com/maps?q=513+Serangoon+Road+Singapore+218154&output=embed"
                 />
               </div>
 
