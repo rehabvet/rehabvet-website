@@ -1,68 +1,133 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { getPayload } from 'payload'
-import config from '@payload-config'
-import { PayloadImage } from '@/components/PayloadImage'
-import type { Modality, Media } from '@/payload-types'
 
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Modalities',
-  description: 'Discover our range of veterinary rehabilitation modalities including laser therapy, electrotherapy, underwater treadmill, and more.',
+  title: 'Rehabilitation Modalities for Pets | RehabVet SG',
+  description:
+    'Discover the wide range of evidence-based treatment modalities we use at RehabVet to help your pet recover — from manual therapy to underwater treadmills.',
 }
 
-export default async function ModalitiesPage() {
-  let modalities: Modality[] = []
-  try {
-    const payload = await getPayload({ config })
-    const result = await payload.find({ collection: 'modalities', limit: 50, sort: 'title' })
-    modalities = result.docs
-  } catch {}
+const MODALITIES = [
+  {
+    title: 'Manual Therapy',
+    slug: 'manual-therapy',
+    excerpt:
+      'Manual therapy is a type of physical therapy that uses hands-on techniques to help improve the mobility and function of dogs and cats.',
+  },
+  {
+    title: 'Physical Therapy',
+    slug: 'physical-therapy',
+    excerpt:
+      'Physical therapy for dogs is a service that provides rehabilitative care to help improve mobility and reduce pain.',
+  },
+  {
+    title: 'Class 4 Therapeutic Laser',
+    slug: 'class-4-therapeutic-laser',
+    excerpt:
+      'This class 4 therapeutic laser is designed to provide relief to dogs and cats suffering from a variety of ailments.',
+  },
+  {
+    title: 'Electrical Therapy',
+    slug: 'electrical-therapy',
+    excerpt:
+      'This service provides electrical therapy, such as TENS and NMES, for both cats and dogs. It is a great way to help improve the health.',
+  },
+  {
+    title: 'Ultrasound Therapy',
+    slug: 'ultrasound-therapy',
+    excerpt:
+      'Ultrasound Therapy is a non-invasive treatment for dogs and cats which uses sound waves to reduce pain and inflammation.',
+  },
+  {
+    title: 'Extracorporeal Shockwave Therapy',
+    slug: 'extracorporeal-shockwave',
+    excerpt:
+      'Extracorporeal Shockwave Therapy (ESWT) is a non-invasive treatment for dogs which uses sound waves to help reduce pain.',
+  },
+  {
+    title: 'TCVM Tui Na',
+    slug: 'tcvm-tui-na',
+    excerpt:
+      'Tui-Na is a traditional Chinese massage therapy specifically tailored for dogs, providing a holistic approach to their wellbeing.',
+  },
+  {
+    title: 'Underwater Treadmill',
+    slug: 'underwater-treadmill',
+    excerpt:
+      'This service provides a unique way to exercise dogs, allowing them to run on a treadmill submerged in water.',
+  },
+  {
+    title: 'Proprioception Exercises',
+    slug: 'proprioception-exercises',
+    excerpt:
+      'We offer canine proprioception exercises to help dogs with nerve damage improve their mobility. Our service is tailored to the individual needs.',
+  },
+]
 
+export default function ModalitiesPage() {
   return (
     <>
+      {/* Hero */}
       <section className="bg-gradient-to-br from-primary-800 via-primary-600 to-primary-500 py-20 text-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold sm:text-5xl">Treatment Modalities</h1>
+          <p className="text-sm font-medium text-primary-300 mb-2">
+            <span className="text-primary-400">Home</span> / Modalities
+          </p>
+          <h1 className="text-4xl font-bold sm:text-5xl">
+            Expert Rehabilitation Modalities for Dogs and Cats
+          </h1>
           <p className="mt-4 max-w-2xl text-lg text-primary-100">
             We use a wide range of evidence-based treatment modalities to help your pet recover.
           </p>
         </div>
       </section>
 
+      {/* Modalities Grid */}
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {modalities.length === 0 ? (
-            <p className="text-center text-gray-500 py-16">No modalities available yet. Check back soon.</p>
-          ) : (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {modalities.map((mod) => (
-                <Link
-                  key={mod.id}
-                  href={`/modalities/${mod.slug}`}
-                  className="group rounded-2xl border border-gray-100 bg-white overflow-hidden shadow-sm hover:shadow-lg hover:border-primary-200 transition-all"
-                >
-                  <div className="relative h-40 overflow-hidden">
-                    <PayloadImage
-                      media={mod.image as Media}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <h2 className="text-lg font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">
-                      {mod.title}
-                    </h2>
-                    {mod.excerpt && (
-                      <p className="mt-2 text-sm text-gray-600 line-clamp-2">{mod.excerpt}</p>
-                    )}
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {MODALITIES.map((mod) => (
+              <div
+                key={mod.slug}
+                className="group rounded-2xl border border-gray-100 bg-white overflow-hidden shadow-sm hover:shadow-lg hover:border-primary-200 transition-all"
+              >
+                <div className="h-48 bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center">
+                  <span className="text-5xl font-bold text-primary-300">
+                    {mod.title[0]}
+                  </span>
+                </div>
+                <div className="p-6">
+                  <h2 className="text-lg font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">
+                    {mod.title}
+                  </h2>
+                  <p className="mt-2 text-sm text-gray-600 line-clamp-3">{mod.excerpt}</p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary-600">
+                    Read More &rarr;
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="bg-primary-50 py-20">
+        <div className="mx-auto max-w-3xl px-4 text-center">
+          <h2 className="text-3xl font-bold text-gray-900">
+            Not sure which modality is right for your pet?
+          </h2>
+          <p className="mt-4 text-lg text-gray-600">
+            Our team will assess your pet and recommend the best treatment plan.
+          </p>
+          <Link
+            href="/contact"
+            className="mt-8 inline-block rounded-full bg-accent-500 px-8 py-3 font-semibold text-white hover:bg-accent-600 transition-colors"
+          >
+            Book a Consultation
+          </Link>
         </div>
       </section>
     </>
