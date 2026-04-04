@@ -77,6 +77,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const staticEntry = STATIC_MODALITIES[slug]
+  if (staticEntry) {
+    return { title: `${staticEntry.title} | RehabVet`, description: staticEntry.excerpt }
+  }
   try {
     const payload = await getPayload({ config })
     const result = await payload.find({ collection: 'modalities', where: { slug: { equals: slug } }, limit: 1 })
@@ -85,9 +88,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       return { title: `${mod.seo?.metaTitle || mod.title} | RehabVet`, description: mod.seo?.metaDescription || mod.excerpt || '' }
     }
   } catch {}
-  if (staticEntry) {
-    return { title: `${staticEntry.title} | RehabVet`, description: staticEntry.excerpt }
-  }
   return { title: 'Modality Not Found' }
 }
 
@@ -103,7 +103,39 @@ export default async function ModalityPage({ params }: Props) {
 
   const staticEntry = STATIC_MODALITIES[slug]
 
-  /* CMS version */
+  /* Static data takes precedence (verified against WP) */
+  if (staticEntry) {
+    return (
+      <>
+        <section className="bg-gradient-to-br from-primary-800 via-primary-600 to-primary-500 text-white">
+          <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+            <Link href="/modalities" className="inline-flex items-center gap-1 text-primary-200 hover:text-white text-sm transition-colors">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+              Back to Modalities
+            </Link>
+            <h1 className="mt-4 text-4xl font-bold sm:text-5xl">{staticEntry.title}</h1>
+            <p className="mt-4 max-w-2xl text-lg text-primary-100">{staticEntry.excerpt}</p>
+          </div>
+        </section>
+        <section className="py-16">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+            <div className="prose prose-lg max-w-none text-gray-700">
+              {staticEntry.body.split('\n\n').map((para, i) => (
+                <p key={i} className="whitespace-pre-line">{para}</p>
+              ))}
+            </div>
+            <div className="mt-16 rounded-2xl bg-primary-50 p-8 text-center">
+              <h2 className="text-2xl font-bold text-gray-900">Want to learn more about {staticEntry.title}?</h2>
+              <p className="mt-2 text-gray-600">Contact us to find out if this treatment is right for your pet.</p>
+              <Link href="/contact" className="mt-6 inline-block rounded-full bg-accent-500 px-8 py-3 font-semibold text-white hover:bg-accent-600 transition-colors">Book Appointment</Link>
+            </div>
+          </div>
+        </section>
+      </>
+    )
+  }
+
+  /* CMS fallback for slugs not in static data */
   if (modality) {
     const conditionsTreated = (modality.conditionsTreated || []).filter((c): c is Condition => typeof c !== 'number')
     return (
@@ -153,35 +185,6 @@ export default async function ModalityPage({ params }: Props) {
     )
   }
 
-  /* Static fallback */
-  if (!staticEntry) notFound()
-
-  return (
-    <>
-      <section className="bg-gradient-to-br from-primary-800 via-primary-600 to-primary-500 text-white">
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-          <Link href="/modalities" className="inline-flex items-center gap-1 text-primary-200 hover:text-white text-sm transition-colors">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-            Back to Modalities
-          </Link>
-          <h1 className="mt-4 text-4xl font-bold sm:text-5xl">{staticEntry.title}</h1>
-          <p className="mt-4 max-w-2xl text-lg text-primary-100">{staticEntry.excerpt}</p>
-        </div>
-      </section>
-      <section className="py-16">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <div className="prose prose-lg max-w-none text-gray-700">
-            {staticEntry.body.split('\n\n').map((para, i) => (
-              <p key={i} className="whitespace-pre-line">{para}</p>
-            ))}
-          </div>
-          <div className="mt-16 rounded-2xl bg-primary-50 p-8 text-center">
-            <h2 className="text-2xl font-bold text-gray-900">Want to learn more about {staticEntry.title}?</h2>
-            <p className="mt-2 text-gray-600">Contact us to find out if this treatment is right for your pet.</p>
-            <Link href="/contact" className="mt-6 inline-block rounded-full bg-accent-500 px-8 py-3 font-semibold text-white hover:bg-accent-600 transition-colors">Book Appointment</Link>
-          </div>
-        </div>
-      </section>
-    </>
-  )
+  /* No static entry and no CMS entry */
+  notFound()
 }
