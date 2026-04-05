@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function DogPhysiotherapyContent() {
   return (
@@ -162,43 +163,43 @@ export default function DogPhysiotherapyContent() {
         <p className="leading-relaxed mb-6" data-aos="fade-up">Qualified rehabilitation specialists — not general practice vets. Led by Dr. Sara Lam BVSc.</p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4" data-aos="fade-up">
           <div className="rounded-2xl border border-gray-200 bg-white p-5 text-center">
-            <div className="w-16 h-16 rounded-full bg-primary/10 mx-auto mb-3 flex items-center justify-center">
-              <span className="text-2xl">👩‍⚕️</span>
+            <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-3">
+              <Image src="/images/team/dr-sara-lam.jpg" alt="Dr. Sara Lam" width={96} height={96} className="w-full h-full object-cover" />
             </div>
             <h3 className="text-base font-bold">Dr. Sara Lam</h3>
             <p className="text-primary text-sm font-medium">Lead Veterinarian</p>
           </div>
           <div className="rounded-2xl border border-gray-200 bg-white p-5 text-center">
-            <div className="w-16 h-16 rounded-full bg-primary/10 mx-auto mb-3 flex items-center justify-center">
-              <span className="text-2xl">🐾</span>
+            <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-3">
+              <Image src="/images/team/xan-chuah.jpg" alt="Xan Chuah Yee Chien" width={96} height={96} className="w-full h-full object-cover" />
             </div>
             <h3 className="text-base font-bold">Xan Chuah Yee Chien</h3>
             <p className="text-primary text-sm font-medium">Senior Therapist</p>
           </div>
           <div className="rounded-2xl border border-gray-200 bg-white p-5 text-center">
-            <div className="w-16 h-16 rounded-full bg-primary/10 mx-auto mb-3 flex items-center justify-center">
-              <span className="text-2xl">🐾</span>
+            <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-3">
+              <Image src="/images/team/noelle-lim.jpg" alt="Noelle Lim" width={96} height={96} className="w-full h-full object-cover" />
             </div>
             <h3 className="text-base font-bold">Noelle Lim</h3>
             <p className="text-primary text-sm font-medium">Senior Therapist</p>
           </div>
           <div className="rounded-2xl border border-gray-200 bg-white p-5 text-center">
-            <div className="w-16 h-16 rounded-full bg-primary/10 mx-auto mb-3 flex items-center justify-center">
-              <span className="text-2xl">🐾</span>
+            <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-3">
+              <Image src="/images/team/hazel-lim.jpg" alt="Hazel Lim" width={96} height={96} className="w-full h-full object-cover" />
             </div>
             <h3 className="text-base font-bold">Hazel Lim</h3>
             <p className="text-primary text-sm font-medium">Therapist</p>
           </div>
           <div className="rounded-2xl border border-gray-200 bg-white p-5 text-center">
-            <div className="w-16 h-16 rounded-full bg-primary/10 mx-auto mb-3 flex items-center justify-center">
-              <span className="text-2xl">💧</span>
+            <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-3">
+              <Image src="/images/team/joyce-ho.jpg" alt="Joyce Ho" width={96} height={96} className="w-full h-full object-cover" />
             </div>
             <h3 className="text-base font-bold">Joyce Ho</h3>
             <p className="text-primary text-sm font-medium">Hydrotherapist</p>
           </div>
           <div className="rounded-2xl border border-gray-200 bg-white p-5 text-center">
-            <div className="w-16 h-16 rounded-full bg-primary/10 mx-auto mb-3 flex items-center justify-center">
-              <span className="text-2xl">💧</span>
+            <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-3">
+              <Image src="/images/team/sean-tan.jpg" alt="Sean Tan" width={96} height={96} className="w-full h-full object-cover" />
             </div>
             <h3 className="text-base font-bold">Sean Tan</h3>
             <p className="text-primary text-sm font-medium">Hydrotherapist</p>
