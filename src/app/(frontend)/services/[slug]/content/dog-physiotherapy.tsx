@@ -101,14 +101,41 @@ export default function DogPhysiotherapyContent() {
           </div>
         </div>
         <h2 className="text-2xl font-bold mt-10 mb-4" data-aos="fade-up">Conditions Treated with Dog Physiotherapy</h2>
-        <p className="leading-relaxed mb-4" data-aos="fade-up">Dogs recovering from TPLO, TTA, femoral head ostectomy (FHO), fracture repair, or spinal surgery benefit enormously from early physiotherapy. We coordinate with your primary vet to begin sessions as soon as it is safe — typically 3–7 days post-surgery for gentle manual therapy, progressing to active exercises as healing allows.</p>
-        <p className="leading-relaxed mb-4" data-aos="fade-up">Arthritis is the single most common reason dogs are referred for physiotherapy in Singapore. Our programme combines manual therapy for pain relief with progressive strengthening exercises that build the muscle needed to support and protect affected joints — slowing disease progression and improving quality of life.</p>
-        <p className="leading-relaxed mb-4" data-aos="fade-up">IVDD patients — particularly Dachshunds, French Bulldogs, and Corgis — often present with hind limb weakness, ataxia, or paralysis. Physiotherapy combines neuromuscular re-education, proprioceptive exercises, and laser therapy to promote nerve recovery and restore function.</p>
-        <p className="leading-relaxed mb-4" data-aos="fade-up">Dysplastic joints cause lifelong pain and progressive degeneration. Physiotherapy strengthens the muscles surrounding affected joints, improves joint stability, and reduces pain — often delaying or avoiding the need for surgical intervention.</p>
-        <p className="leading-relaxed mb-4" data-aos="fade-up">Degenerative myelopathy, fibrocartilaginous embolism (FCE), vestibular disease, and other neurological conditions respond well to structured physiotherapy. Balance exercises, assisted standing, and controlled movement help retrain neural pathways and maximise remaining function.</p>
-        <p className="leading-relaxed mb-4" data-aos="fade-up">Both pre- and post-surgical cruciate cases benefit from physiotherapy. Pre-surgical: to build muscle mass and maintain fitness before the operation. Post-surgical: to restore range of motion, rebuild quadriceps strength, and retrain normal gait patterns as quickly and safely as possible.</p>
-        <p className="leading-relaxed mb-4" data-aos="fade-up">Muscle strains, tendon and ligament sprains, and repetitive strain injuries are treated with a combination of manual therapy, therapeutic ultrasound, shockwave therapy, and progressive exercise. The goal is full functional recovery and prevention of re-injury.</p>
-        <p className="leading-relaxed mb-4" data-aos="fade-up">Older dogs naturally lose muscle mass, joint flexibility, and balance. Regular physiotherapy sessions help senior dogs maintain mobility, prevent falls, manage age-related pain, and preserve independence — significantly improving quality of life in their golden years.</p>
+        <p className="leading-relaxed mb-6" data-aos="fade-up">Our physiotherapy for dogs in Singapore addresses a wide range of conditions, from post-surgical recovery to age-related mobility decline.</p>
+        <div className="space-y-6" data-aos="fade-up">
+          <div>
+            <h3 className="text-lg font-semibold mb-1">Post-surgical rehabilitation</h3>
+            <p className="leading-relaxed text-gray-700">Dogs recovering from TPLO, TTA, femoral head ostectomy (FHO), fracture repair, or spinal surgery benefit enormously from early physiotherapy. We coordinate with your primary vet to begin sessions as soon as it is safe — typically 3–7 days post-surgery for gentle manual therapy, progressing to active exercises as healing allows.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-1">Osteoarthritis and degenerative joint disease</h3>
+            <p className="leading-relaxed text-gray-700">Arthritis is the single most common reason dogs are referred for physiotherapy in Singapore. Our programme combines manual therapy for pain relief with progressive strengthening exercises that build the muscle needed to support and protect affected joints — slowing disease progression and improving quality of life.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-1">Intervertebral disc disease (IVDD)</h3>
+            <p className="leading-relaxed text-gray-700">IVDD patients — particularly Dachshunds, French Bulldogs, and Corgis — often present with hind limb weakness, ataxia, or paralysis. Physiotherapy combines neuromuscular re-education, proprioceptive exercises, and laser therapy to promote nerve recovery and restore function.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-1">Hip and elbow dysplasia</h3>
+            <p className="leading-relaxed text-gray-700">Dysplastic joints cause lifelong pain and progressive degeneration. Physiotherapy strengthens the muscles surrounding affected joints, improves joint stability, and reduces pain — often delaying or avoiding the need for surgical intervention.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-1">Neurological conditions</h3>
+            <p className="leading-relaxed text-gray-700">Degenerative myelopathy, fibrocartilaginous embolism (FCE), vestibular disease, and other neurological conditions respond well to structured physiotherapy. Balance exercises, assisted standing, and controlled movement help retrain neural pathways and maximise remaining function.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-1">Cruciate ligament injuries</h3>
+            <p className="leading-relaxed text-gray-700">Both pre- and post-surgical cruciate cases benefit from physiotherapy. Pre-surgical: to build muscle mass and maintain fitness before the operation. Post-surgical: to restore range of motion, rebuild quadriceps strength, and retrain normal gait patterns as quickly and safely as possible.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-1">Soft tissue injuries</h3>
+            <p className="leading-relaxed text-gray-700">Muscle strains, tendon and ligament sprains, and repetitive strain injuries are treated with a combination of manual therapy, therapeutic ultrasound, shockwave therapy, and progressive exercise. The goal is full functional recovery and prevention of re-injury.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-1">Geriatric mobility decline</h3>
+            <p className="leading-relaxed text-gray-700">Older dogs naturally lose muscle mass, joint flexibility, and balance. Regular physiotherapy sessions help senior dogs maintain mobility, prevent falls, manage age-related pain, and preserve independence — significantly improving quality of life in their golden years.</p>
+          </div>
+        </div>
         <h3 className="text-xl font-bold mt-8 mb-4" data-aos="fade-up">What to Expect During Your Dog&apos;s Physiotherapy Session</h3>
         <p className="leading-relaxed mb-4" data-aos="fade-up">Bring your dog&apos;s medical history, any imaging reports (X-rays, MRI, CT), and a list of current medications. If your dog has had recent surgery, bring the surgical report. No special preparation is needed — just come with your dog well-rested and comfortable.</p>
         <p className="leading-relaxed mb-4" data-aos="fade-up">Your physiotherapist will combine hands-on manual therapy with targeted exercises, adjusting the programme in real time based on your dog&apos;s response. Sessions typically last 30–60 minutes. You are welcome to observe and ask questions throughout — we encourage owner involvement.</p>
