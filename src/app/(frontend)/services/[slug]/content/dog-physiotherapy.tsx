@@ -27,16 +27,78 @@ export default function DogPhysiotherapyContent() {
         <p className="leading-relaxed mb-4" data-aos="fade-up">Session notes recorded, progress measurements taken at regular reassessments, and home exercise recommendations provided to continue improvement between visits.</p>
         <p className="leading-relaxed mb-4" data-aos="fade-up"><a href="https://wa.me/6587987554" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">WhatsApp us at +65 8798 7554</a> to discuss your dog’s needs and schedule an assessment.</p>
         <h2 className="text-2xl font-bold mt-10 mb-4" data-aos="fade-up">Top 10 Benefits of Physiotherapy for Dogs</h2>
-        <p className="leading-relaxed mb-4" data-aos="fade-up">Dogs receiving structured physiotherapy after orthopaedic surgery — TPLO, TTA, fracture repair, or spinal procedures — recover faster, develop better muscle mass, and achieve greater joint range of motion compared to rest alone. Our physiotherapists begin rehabilitation as soon as it is clinically safe.</p>
-        <p className="leading-relaxed mb-4" data-aos="fade-up">Physiotherapy techniques such as manual therapy, Class 4 laser, TENS, and therapeutic ultrasound provide effective pain relief through natural mechanisms — endorphin release, reduced inflammation, and improved circulation — often reducing or eliminating the need for long-term pain medication.</p>
-        <p className="leading-relaxed mb-4" data-aos="fade-up">Joint mobilisation, targeted stretching, and progressive exercise programmes restore flexibility and movement to stiff, post-surgical, or arthritic joints. Clinical measurements at RehabVet show joint range of motion improvements of 15–25% within 4–6 sessions for many patients.</p>
-        <p className="leading-relaxed mb-4" data-aos="fade-up">Muscle atrophy is one of the most common consequences of injury, surgery, or prolonged rest. Physiotherapy uses progressive resistance exercises, balance work, and targeted strengthening to rebuild lost muscle — critical for joint stability and long-term function.</p>
-        <p className="leading-relaxed mb-4" data-aos="fade-up">For dogs with IVDD, degenerative myelopathy, fibrocartilaginous embolism, or vestibular disease, physiotherapy helps retrain neural pathways through proprioceptive exercises, assisted standing, and controlled weight-bearing — improving motor function over time.</p>
-        <p className="leading-relaxed mb-4" data-aos="fade-up">When a dog favours one limb, the opposite limb and spine bear extra load — leading to secondary injuries. Physiotherapy addresses the original problem while correcting compensatory movement patterns before they cause additional damage.</p>
-        <p className="leading-relaxed mb-4" data-aos="fade-up">Osteoarthritis affects up to 80% of dogs over 8 years old. Regular physiotherapy maintains joint mobility, builds protective muscle mass, reduces pain, and slows disease progression — helping arthritic dogs stay active and comfortable for longer.</p>
-        <p className="leading-relaxed mb-4" data-aos="fade-up">Proprioception — the body&apos;s awareness of its position in space — is often impaired after surgery or neurological disease. Balance exercises, wobble boards, and controlled surface work retrain these pathways, reducing the risk of falls and re-injury.</p>
-        <p className="leading-relaxed mb-4" data-aos="fade-up">Overweight dogs face significantly higher risks of joint disease, diabetes, and reduced life expectancy. Physiotherapy provides structured, supervised exercise programmes that burn calories safely — even for dogs who cannot tolerate conventional exercise due to pain or mobility limitations.</p>
-        <p className="leading-relaxed mb-4" data-aos="fade-up">Every physiotherapy programme at RehabVet includes regular reassessments — muscle circumference measurements, gait analysis, and functional mobility scoring — so you can see your dog&apos;s improvement in concrete, verifiable terms.</p>
+        <div className="space-y-6" data-aos="fade-up">
+          <div className="flex gap-4">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-white font-bold text-sm">1</span>
+            <div>
+              <h3 className="text-lg font-semibold mb-1">Faster Post-Surgical Recovery</h3>
+              <p className="leading-relaxed text-gray-700">Dogs receiving structured physiotherapy after orthopaedic surgery — TPLO, TTA, fracture repair, or spinal procedures — recover faster, develop better muscle mass, and achieve greater joint range of motion compared to rest alone. Our physiotherapists begin rehabilitation as soon as it is clinically safe.</p>
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-white font-bold text-sm">2</span>
+            <div>
+              <h3 className="text-lg font-semibold mb-1">Effective Pain Relief Without Long-Term Medication</h3>
+              <p className="leading-relaxed text-gray-700">Physiotherapy techniques such as manual therapy, Class 4 laser, TENS, and therapeutic ultrasound provide effective pain relief through natural mechanisms — endorphin release, reduced inflammation, and improved circulation — often reducing or eliminating the need for long-term pain medication.</p>
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-white font-bold text-sm">3</span>
+            <div>
+              <h3 className="text-lg font-semibold mb-1">Improved Joint Range of Motion</h3>
+              <p className="leading-relaxed text-gray-700">Joint mobilisation, targeted stretching, and progressive exercise programmes restore flexibility and movement to stiff, post-surgical, or arthritic joints. Clinical measurements at RehabVet show joint range of motion improvements of 15–25% within 4–6 sessions for many patients.</p>
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-white font-bold text-sm">4</span>
+            <div>
+              <h3 className="text-lg font-semibold mb-1">Muscle Rebuilding &amp; Strengthening</h3>
+              <p className="leading-relaxed text-gray-700">Muscle atrophy is one of the most common consequences of injury, surgery, or prolonged rest. Physiotherapy uses progressive resistance exercises, balance work, and targeted strengthening to rebuild lost muscle — critical for joint stability and long-term function.</p>
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-white font-bold text-sm">5</span>
+            <div>
+              <h3 className="text-lg font-semibold mb-1">Neurological Rehabilitation</h3>
+              <p className="leading-relaxed text-gray-700">For dogs with IVDD, degenerative myelopathy, fibrocartilaginous embolism, or vestibular disease, physiotherapy helps retrain neural pathways through proprioceptive exercises, assisted standing, and controlled weight-bearing — improving motor function over time.</p>
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-white font-bold text-sm">6</span>
+            <div>
+              <h3 className="text-lg font-semibold mb-1">Correcting Compensatory Movement Patterns</h3>
+              <p className="leading-relaxed text-gray-700">When a dog favours one limb, the opposite limb and spine bear extra load — leading to secondary injuries. Physiotherapy addresses the original problem while correcting compensatory movement patterns before they cause additional damage.</p>
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-white font-bold text-sm">7</span>
+            <div>
+              <h3 className="text-lg font-semibold mb-1">Arthritis Management</h3>
+              <p className="leading-relaxed text-gray-700">Osteoarthritis affects up to 80% of dogs over 8 years old. Regular physiotherapy maintains joint mobility, builds protective muscle mass, reduces pain, and slows disease progression — helping arthritic dogs stay active and comfortable for longer.</p>
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-white font-bold text-sm">8</span>
+            <div>
+              <h3 className="text-lg font-semibold mb-1">Balance &amp; Proprioception Training</h3>
+              <p className="leading-relaxed text-gray-700">Proprioception — the body&apos;s awareness of its position in space — is often impaired after surgery or neurological disease. Balance exercises, wobble boards, and controlled surface work retrain these pathways, reducing the risk of falls and re-injury.</p>
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-white font-bold text-sm">9</span>
+            <div>
+              <h3 className="text-lg font-semibold mb-1">Safe Weight Management</h3>
+              <p className="leading-relaxed text-gray-700">Overweight dogs face significantly higher risks of joint disease, diabetes, and reduced life expectancy. Physiotherapy provides structured, supervised exercise programmes that burn calories safely — even for dogs who cannot tolerate conventional exercise due to pain or mobility limitations.</p>
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-white font-bold text-sm">10</span>
+            <div>
+              <h3 className="text-lg font-semibold mb-1">Measurable, Evidence-Based Progress</h3>
+              <p className="leading-relaxed text-gray-700">Every physiotherapy programme at RehabVet includes regular reassessments — muscle circumference measurements, gait analysis, and functional mobility scoring — so you can see your dog&apos;s improvement in concrete, verifiable terms.</p>
+            </div>
+          </div>
+        </div>
         <h2 className="text-2xl font-bold mt-10 mb-4" data-aos="fade-up">Conditions Treated with Dog Physiotherapy</h2>
         <p className="leading-relaxed mb-4" data-aos="fade-up">Dogs recovering from TPLO, TTA, femoral head ostectomy (FHO), fracture repair, or spinal surgery benefit enormously from early physiotherapy. We coordinate with your primary vet to begin sessions as soon as it is safe — typically 3–7 days post-surgery for gentle manual therapy, progressing to active exercises as healing allows.</p>
         <p className="leading-relaxed mb-4" data-aos="fade-up">Arthritis is the single most common reason dogs are referred for physiotherapy in Singapore. Our programme combines manual therapy for pain relief with progressive strengthening exercises that build the muscle needed to support and protect affected joints — slowing disease progression and improving quality of life.</p>
@@ -97,6 +159,19 @@ export default function DogPhysiotherapyContent() {
           </table>
         </div>
         <h2 className="text-2xl font-bold mt-10 mb-4" data-aos="fade-up">Meet Your Physiotherapy Team</h2>
+        <p className="leading-relaxed mb-6" data-aos="fade-up">Qualified rehabilitation specialists — not general practice vets. Every session is supervised by our veterinary team.</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6" data-aos="fade-up">
+          <div className="rounded-2xl border border-gray-200 bg-white p-6">
+            <h3 className="text-lg font-bold">Dr. Sara Lam <span className="text-sm font-normal text-gray-500">BVSc</span></h3>
+            <p className="text-primary text-sm font-medium mb-2">Lead Veterinarian</p>
+            <p className="text-gray-700 text-sm leading-relaxed">Dr. Sara leads RehabVet&apos;s veterinary rehabilitation team. She oversees all physiotherapy programmes and ensures every treatment plan is clinically appropriate, evidence-based, and tailored to your dog&apos;s specific needs.</p>
+          </div>
+          <div className="rounded-2xl border border-gray-200 bg-white p-6">
+            <h3 className="text-lg font-bold">Rehabilitation Therapists</h3>
+            <p className="text-primary text-sm font-medium mb-2">Certified Veterinary Physiotherapists</p>
+            <p className="text-gray-700 text-sm leading-relaxed">Our therapists hold internationally recognised qualifications in animal physiotherapy and rehabilitation. They work under Dr. Sara&apos;s supervision and participate in ongoing professional development to stay current with the latest research and techniques.</p>
+          </div>
+        </div>
         <h2 className="text-2xl font-bold mt-10 mb-4" data-aos="fade-up">Physiotherapy Success Stories</h2>
         <h2 className="text-2xl font-bold mt-12 mb-6" data-aos="fade-up">Frequently Asked Questions About Dog Physiotherapy</h2>
         <div className="space-y-3" data-aos="fade-up">
