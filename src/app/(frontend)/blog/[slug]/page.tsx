@@ -84,30 +84,33 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <>
-      <section className="bg-gradient-to-br from-primary-800 via-primary-600 to-primary-500 py-20 text-white">
+      {/* Breadcrumb + title hero */}
+      <section className="bg-white border-b border-gray-100 py-10">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <Link href="/blog" className="inline-flex items-center gap-1 text-primary-200 hover:text-white text-sm transition-colors">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-            Back to Blog
-          </Link>
+          <p className="text-sm text-gray-400 mb-4">
+            <Link href="/" className="hover:text-accent-500">Home</Link>
+            <span className="mx-2">/</span>
+            <Link href="/blog" className="hover:text-accent-500">Blog</Link>
+            <span className="mx-2">/</span>
+            <span className="text-gray-600">{post.title}</span>
+          </p>
           {post.categories && post.categories.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mb-4">
               {post.categories.map((cat) => (
                 <Link
                   key={cat}
                   href={`/blog?category=${cat}`}
-                  className="rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white hover:bg-white/30 transition-colors"
+                  className="rounded-full bg-accent-500 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white hover:bg-accent-600 transition-colors"
                 >
                   {CATEGORY_LABELS[cat] || cat}
                 </Link>
               ))}
             </div>
           )}
-          <h1 className="mt-4 text-3xl font-bold sm:text-4xl lg:text-5xl leading-tight">{post.title}</h1>
-          {post.excerpt && <p className="mt-4 text-lg text-primary-100">{post.excerpt}</p>}
-          <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-primary-200">
-            {post.author && <span>By {post.author}</span>}
-            <span aria-hidden="true">&middot;</span>
+          <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl leading-tight">{post.title}</h1>
+          <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-gray-400">
+            {post.author && <span>By <span className="text-gray-600 font-medium">{post.author}</span></span>}
+            <span>·</span>
             <time dateTime={post.date}>{formatDate(post.date)}</time>
           </div>
         </div>
