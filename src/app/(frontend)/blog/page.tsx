@@ -94,7 +94,7 @@ export default async function BlogPage({
       <section className="relative bg-gray-800 py-24 text-white overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-40"
-          style={{ backgroundImage: "url('https://rehabvet.com/wp-content/uploads/2023/06/rehabvet-blog-hero.jpg')" }}
+          style={{ backgroundImage: "url('https://rehabvet.com/wp-content/uploads/2026/02/dog-physiotherapy-singapore-featured.jpg')" }}
         />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold sm:text-5xl">RehabVet Blog</h1>
