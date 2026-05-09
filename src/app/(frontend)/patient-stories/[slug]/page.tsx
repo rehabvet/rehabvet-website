@@ -2,25 +2,35 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { notFound } from 'next/navigation'
+import { RichText } from '@/components/RichText'
+import Button from '@/components/shared/primary-button'
+import { FaPaw } from 'react-icons/fa'
 
 export const dynamic = 'force-dynamic'
 
 type Props = { params: Promise<{ slug: string }> }
 
+export async function generateStaticParams() {
+  try {
+    const payload = await getPayload({ config })
+    const result = await payload.find({ collection: 'patient-stories', limit: 100, select: { slug: true } })
+    return result.docs.map((s: any) => ({ slug: s.slug }))
+  } catch {
+    return []
+  }
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   try {
     const payload = await getPayload({ config })
-    const result = await payload.find({
-      collection: 'patient-stories',
-      where: { slug: { equals: slug } },
-      limit: 1,
-    })
+    const result = await payload.find({ collection: 'patient-stories', where: { slug: { equals: slug } }, limit: 1 })
     const story = result.docs[0] as any
     if (!story) return { title: 'Patient Story Not Found' }
     return {
-      title: story.seo?.metaTitle || `${story.patientName || story.petName}'s Story`,
-      description: story.seo?.metaDescription || story.teaser || story.excerpt || '',
+      title: `${story.patientName}'s Story | RehabVet`,
+      description: story.condition || '',
     }
   } catch {
     return { title: slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) }
@@ -38,122 +48,112 @@ export default async function PatientStoryPage({ params }: Props) {
       where: { slug: { equals: slug } },
       limit: 1,
     })
-    story = result.docs[0]
-  } catch {
-    // DB not available
-  }
+    story = result.docs[0] || null
+  } catch {}
 
-  const petName = story?.petName || slug.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())
-  const breed = story?.breed || null
-  const condition = story?.condition || null
-  const teaser = (story as any)?.teaser || (story as any)?.excerpt || ''
-  const content = story?.content || ''
-  const outcome = story?.outcome || null
-  const galleryImages: string[] = story?.galleryImages || []
+  if (!story) notFound()
+
+  const patientName: string = story.patientName || slug.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())
+  const condition: string | null = story.condition || null
 
   return (
     <>
-      <section className="bg-gradient-to-br from-primary-700 to-primary-500 py-20 text-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <Link href="/patient-stories" className="text-primary-200 hover:text-white text-sm">
-            &larr; Back to Patient Stories
-          </Link>
-          <div className="mt-4 flex flex-wrap items-center gap-3">
-            <h1 className="text-4xl font-bold sm:text-5xl">{petName}&apos;s Story</h1>
-            {outcome && (
-              <span className="rounded-full bg-white/20 px-3 py-1 text-sm font-semibold text-white">
-                {outcome}
+      {/* ── Page header ── */}
+      <div className="bg-primary_bg py-6 md:py-8 xl:py-12 z-10 relative">
+        <div className="container">
+          <div className="py-10 md:py-14 xl:py-20 bg-primary_shade rounded-[30px] text-center space-y-4 px-6 md:px-12">
+            <p className="text-sm font-semibold text-dark/60">
+              <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+              <span className="mx-2">/</span>
+              <Link href="/patient-stories" className="hover:text-primary transition-colors">Patient Stories</Link>
+            </p>
+
+            <div className="flex items-center justify-center gap-2">
+              <FaPaw className="text-primary text-lg" />
+              <h6 className="!text-primary">{patientName}&apos;s Story</h6>
+            </div>
+
+            <h1 className="animateText !text-3xl md:!text-4xl xl:!text-5xl max-w-3xl mx-auto">
+              {story.title}
+            </h1>
+
+            {condition && (
+              <span className="inline-block rounded-full bg-white border border-border_one px-4 py-1 text-sm font-semibold text-primary">
+                {condition.length > 80 ? condition.slice(0, 80) + '…' : condition}
               </span>
             )}
           </div>
-          <div className="mt-3 flex flex-wrap gap-3 text-primary-200 text-sm">
-            {breed && <span>{breed}</span>}
-            {breed && condition && <span aria-hidden="true">&middot;</span>}
-            {condition && <span>{condition}</span>}
-          </div>
-          {teaser && <p className="mt-4 max-w-2xl text-lg text-primary-100">{teaser}</p>}
         </div>
-      </section>
+      </div>
 
-      <section className="py-16">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          {galleryImages.length > 0 ? (
-            <div className="mb-12 grid grid-cols-2 gap-4 sm:grid-cols-3">
-              {galleryImages.map((img: string, i: number) => (
-                <div key={i} className="aspect-square overflow-hidden rounded-xl bg-gray-100">
-                  <img src={img} alt={`${petName} - photo ${i + 1}`} className="h-full w-full object-cover" />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="mb-12 grid grid-cols-2 gap-4 sm:grid-cols-3">
-              {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="aspect-square rounded-xl bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center"
-                >
-                  <span className="text-4xl">🐾</span>
-                </div>
-              ))}
-            </div>
-          )}
+      {/* ── Story content ── */}
+      <section>
+        <div className="container">
+          <div className="max-w-3xl mx-auto">
 
-          {content ? (
-            <div className="prose prose-lg max-w-none text-gray-700">
-              <p>{content}</p>
-            </div>
-          ) : (
-            <div className="prose prose-lg max-w-none text-gray-700">
-              <p>
-                {petName}&apos;s full story will be published here shortly. Our patient stories are
-                shared with the kind permission of their owners and are a testament to the
-                dedication of both the rehabilitation team and the families who commit to the process.
-              </p>
-              {condition && (
+            {story.story ? (
+              <div data-aos="fade-up">
+                <RichText data={story.story} />
+              </div>
+            ) : (
+              <div className="prose prose-lg max-w-none" data-aos="fade-up">
                 <p>
-                  This case involves{' '}
-                  <Link href="/conditions" className="text-primary-500 underline hover:text-primary-700">
-                    {condition}
-                  </Link>
-                  , a condition we have extensive experience treating through targeted rehabilitation
-                  programmes.
+                  {patientName}&apos;s full story will be published here shortly. Our patient stories
+                  are shared with the kind permission of their owners and are a testament to the
+                  dedication of both the rehabilitation team and the families who commit to the process.
                 </p>
-              )}
-            </div>
-          )}
+                {condition && (
+                  <p>
+                    This case involves{' '}
+                    <Link href="/conditions" className="text-primary underline hover:text-primary-700">
+                      {condition}
+                    </Link>
+                    , a condition we have extensive experience treating through targeted rehabilitation programmes.
+                  </p>
+                )}
+              </div>
+            )}
 
-          {condition && (
-            <div className="mt-12 rounded-2xl border border-primary-100 bg-primary-50 p-6">
-              <h2 className="text-lg font-bold text-gray-900">About {condition}</h2>
-              <p className="mt-2 text-sm text-gray-600">
-                Learn more about this condition and how rehabilitation can help.
-              </p>
-              <Link
-                href="/conditions"
-                className="mt-3 inline-block text-sm font-medium text-primary-500 hover:text-primary-700"
-              >
-                View Conditions &rarr;
-              </Link>
-            </div>
-          )}
+            {/* Condition info box */}
+            {condition && (
+              <div className="mt-12 rounded-2xl bg-primary_shade border border-border_one p-6" data-aos="fade-up">
+                <h6 className="!font-bold text-dark">About this condition</h6>
+                <p className="mt-2 text-sm text-text_color">
+                  Learn more about this condition and how rehabilitation can help.
+                </p>
+                <Link href="/conditions" className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:text-primary-700 transition-colors">
+                  View Conditions &rarr;
+                </Link>
+              </div>
+            )}
 
-          <div className="mt-16 rounded-2xl bg-accent-400/10 p-8 text-center">
-            <h2 className="text-2xl font-bold text-gray-900">Inspired by {petName}&apos;s story?</h2>
-            <p className="mt-2 text-gray-600">
-              Our team is ready to help your pet on their road to recovery.
-            </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-4">
-              <Link
-                href="/contact"
-                className="rounded-full bg-accent-400 px-8 py-3 font-semibold text-white hover:bg-accent-600 transition-colors"
-              >
-                Book a Consultation
-              </Link>
-              <Link
-                href="/patient-stories"
-                className="rounded-full border border-gray-300 px-8 py-3 font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
-              >
-                More Stories
+            {/* CTA */}
+            <div className="mt-14 rounded-2xl bg-primary border-0 p-8 text-center space-y-4" data-aos="fade-up">
+              <h5 className="!text-white !font-bold">Inspired by {patientName}&apos;s story?</h5>
+              <p className="text-white/80 text-sm">Our team is ready to help your pet on their road to recovery.</p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Button
+                  text="Book a Consultation"
+                  href="/contact"
+                  as="link"
+                  className="!bg-white !border-white !text-primary hover:!bg-primary_shade"
+                />
+                <Button
+                  text="More Stories"
+                  href="/patient-stories"
+                  as="link"
+                  variant="inverse"
+                  className="!border-white/50 !text-white hover:!text-primary"
+                />
+              </div>
+            </div>
+
+            <div className="mt-8" data-aos="fade-up">
+              <Link href="/patient-stories" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-700 transition-colors">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to Patient Stories
               </Link>
             </div>
           </div>
