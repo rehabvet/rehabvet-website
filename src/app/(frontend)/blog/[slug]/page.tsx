@@ -1,11 +1,14 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { notFound } from 'next/navigation'
 import { PayloadImage } from '@/components/PayloadImage'
 import { RichText } from '@/components/RichText'
 import type { BlogPost, Media } from '@/payload-types'
+import Button from '@/components/shared/primary-button'
+import { FaPaw } from 'react-icons/fa'
 
 export const dynamic = 'force-dynamic'
 
@@ -26,6 +29,11 @@ const CATEGORY_LABELS: Record<string, string> = {
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('en-SG', { year: 'numeric', month: 'long', day: 'numeric' })
+}
+
+function getImageUrl(media: Media | number | null | undefined): string | null {
+  if (!media || typeof media === 'number') return null
+  return (media as Media).url || null
 }
 
 export async function generateStaticParams() {
@@ -82,111 +90,139 @@ export default async function BlogPostPage({ params }: Props) {
 
   if (!post) notFound()
 
+  const featuredImgUrl = getImageUrl(post.featuredImage as Media)
+
   return (
     <>
-      {/* Breadcrumb + title hero */}
-      <section className="bg-white border-b border-gray-100 py-10">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <p className="text-sm text-gray-400 mb-4">
-            <Link href="/" className="hover:text-accent-500">Home</Link>
-            <span className="mx-2">/</span>
-            <Link href="/blog" className="hover:text-accent-500">Blog</Link>
-            <span className="mx-2">/</span>
-            <span className="text-gray-600">{post.title}</span>
-          </p>
-          {post.categories && post.categories.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-4">
-              {post.categories.map((cat) => (
-                <Link
-                  key={cat}
-                  href={`/blog?category=${cat}`}
-                  className="rounded-full bg-accent-500 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white hover:bg-accent-600 transition-colors"
-                >
-                  {CATEGORY_LABELS[cat] || cat}
-                </Link>
-              ))}
-            </div>
-          )}
-          <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl leading-tight">{post.title}</h1>
-          <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-gray-400">
-            {post.author && <span>By <span className="text-gray-600 font-medium">{post.author}</span></span>}
-            <span>·</span>
-            <time dateTime={post.date}>{formatDate(post.date)}</time>
-          </div>
-        </div>
-      </section>
+      {/* ── Page header ── */}
+      <div className="bg-primary_bg py-6 md:py-8 xl:py-12 z-10 relative">
+        <div className="container">
+          <div className="py-10 md:py-14 xl:py-20 bg-primary_shade rounded-[30px] text-center space-y-4 px-6 md:px-12">
+            {/* Breadcrumb */}
+            <p className="text-sm font-semibold text-dark/60">
+              <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+              <span className="mx-2">/</span>
+              <Link href="/blog" className="hover:text-primary transition-colors">Blog</Link>
+            </p>
 
-      <section className="py-16">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          {/* Featured Image */}
-          {post.featuredImage && typeof post.featuredImage !== 'number' && post.featuredImage.url && (
-            <div className="mb-12 relative aspect-[16/9] w-full rounded-2xl overflow-hidden">
-              <PayloadImage
-                media={post.featuredImage}
-                fill
-                sizes="(max-width: 768px) 100vw, 768px"
-                priority
-              />
-            </div>
-          )}
-
-          {/* Content */}
-          {post.content ? (
-            <RichText data={post.content} />
-          ) : (
-            <div className="prose prose-lg max-w-none text-gray-700">
-              <p>This article is being prepared and will be published shortly.</p>
-            </div>
-          )}
-
-          {/* CTA */}
-          <div className="mt-16 flex flex-col gap-6 rounded-2xl bg-primary-50 p-8 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="font-semibold text-gray-900">Ready to help your pet?</p>
-              <p className="mt-1 text-sm text-gray-600">Book a rehabilitation consultation with our team.</p>
-            </div>
-            <Link
-              href="/contact"
-              className="shrink-0 rounded-full bg-accent-500 px-8 py-3 text-center font-semibold text-white hover:bg-accent-600 transition-colors"
-            >
-              Book Now
-            </Link>
-          </div>
-
-          {/* Related Posts */}
-          {relatedPosts.length > 0 && (
-            <div className="mt-16">
-              <h2 className="text-2xl font-bold text-gray-900">Related Articles</h2>
-              <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-3">
-                {relatedPosts.map((related) => (
+            {/* Categories */}
+            {post.categories && post.categories.length > 0 && (
+              <div className="flex flex-wrap justify-center gap-2">
+                {post.categories.map((cat) => (
                   <Link
-                    key={related.id}
-                    href={`/blog/${related.slug}`}
-                    className="group rounded-xl border border-gray-100 overflow-hidden hover:shadow-md transition-all"
+                    key={cat}
+                    href={`/blog?category=${cat}`}
+                    className="rounded-full bg-white border border-border_one px-4 py-1 text-xs font-bold text-primary hover:bg-primary hover:text-white hover:border-primary transition-colors"
                   >
-                    <div className="relative h-32 overflow-hidden">
-                      <PayloadImage
-                        media={related.featuredImage as Media}
-                        fill
-                        sizes="(max-width: 640px) 100vw, 250px"
-                        className="group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <h3 className="text-sm font-semibold text-gray-900 group-hover:text-primary-600 line-clamp-2">{related.title}</h3>
-                      <p className="mt-1 text-xs text-gray-400">{formatDate(related.date)}</p>
-                    </div>
+                    {CATEGORY_LABELS[cat] || cat}
                   </Link>
                 ))}
               </div>
-            </div>
-          )}
+            )}
 
-          <div className="mt-8">
-            <Link href="/blog" className="inline-flex items-center gap-1 text-sm font-medium text-primary-600 hover:text-primary-700">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-              Back to Blog
-            </Link>
+            <h1 className="animateText !text-3xl md:!text-4xl xl:!text-5xl max-w-4xl mx-auto">{post.title}</h1>
+
+            <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-text_color/70">
+              <span className="flex items-center gap-1">
+                <FaPaw className="text-primary text-xs" />
+                {post.author || 'RehabVet'}
+              </span>
+              <span>·</span>
+              <time dateTime={post.date}>{formatDate(post.date)}</time>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Content ── */}
+      <section>
+        <div className="container">
+          <div className="max-w-3xl mx-auto">
+
+            {/* Featured Image */}
+            {featuredImgUrl && (
+              <div className="mb-10 relative aspect-[16/9] w-full rounded-2xl overflow-hidden" data-aos="fade-up">
+                <Image
+                  src={featuredImgUrl}
+                  alt={(post.featuredImage as Media)?.alt || post.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 768px"
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            )}
+
+            {/* Body */}
+            <div data-aos="fade-up" data-aos-delay={100}>
+              {post.content ? (
+                <RichText data={post.content} />
+              ) : (
+                <p className="text-lg text-text_color leading-relaxed">
+                  This article is being prepared and will be published shortly.
+                </p>
+              )}
+            </div>
+
+            {/* Inline CTA */}
+            <div className="mt-14 rounded-2xl bg-primary_shade border border-border_one p-8 flex flex-col sm:flex-row items-center gap-6" data-aos="fade-up">
+              <div className="flex-1">
+                <h5 className="!font-bold">Ready to help your pet?</h5>
+                <p className="mt-1 text-sm">Book a rehabilitation consultation with our team.</p>
+              </div>
+              <Button text="Book Now" href="/contact" as="link" className="shrink-0" />
+            </div>
+
+            {/* Related Posts */}
+            {relatedPosts.length > 0 && (
+              <div className="mt-16" data-aos="fade-up">
+                <div className="flex items-center gap-2 mb-6">
+                  <FaPaw className="text-primary" />
+                  <h5 className="!font-bold">Related Articles</h5>
+                </div>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+                  {relatedPosts.map((related) => {
+                    const relatedImgUrl = getImageUrl(related.featuredImage as Media)
+                    return (
+                      <Link
+                        key={related.id}
+                        href={`/blog/${related.slug}`}
+                        className="group rounded-2xl border border-border_one overflow-hidden hover:border-primary hover:shadow-lg transition-all duration-300"
+                      >
+                        <div className="relative h-32 overflow-hidden bg-primary_shade">
+                          {relatedImgUrl ? (
+                            <Image
+                              src={relatedImgUrl}
+                              alt={related.title}
+                              fill
+                              sizes="(max-width: 640px) 100vw, 250px"
+                              className="object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <span className="text-primary/40 text-xs">RehabVet</span>
+                            </div>
+                          )}
+                        </div>
+                        <div className="p-4">
+                          <p className="text-sm font-semibold text-dark group-hover:text-primary transition-colors line-clamp-2">{related.title}</p>
+                          <p className="mt-1 text-xs text-text_color/60">{formatDate(related.date)}</p>
+                        </div>
+                      </Link>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
+
+            <div className="mt-10" data-aos="fade-up">
+              <Link href="/blog" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-700 transition-colors">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to Blog
+              </Link>
+            </div>
           </div>
         </div>
       </section>

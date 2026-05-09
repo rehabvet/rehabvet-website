@@ -1,11 +1,21 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { DM_Sans, Playfair_Display } from 'next/font/google'
 import '../../globals.css'
 import { HeaderServer } from '@/components/HeaderServer'
 import SiteFooter from '@/components/shared/footer'
 import ClientWrapper from '@/components/shared/client-wrapper'
 
-const inter = Inter({ subsets: ['latin'] })
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-dm-sans',
+  display: 'swap',
+})
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: {
@@ -24,7 +34,7 @@ export const metadata: Metadata = {
 export default function FrontendLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${dmSans.variable} ${playfair.variable} ${dmSans.className} antialiased`}>
         <ClientWrapper>
           <HeaderServer />
           <main className="min-h-screen">{children}</main>

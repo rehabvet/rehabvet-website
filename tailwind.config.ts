@@ -77,8 +77,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        primary: ['Inter', 'system-ui', 'sans-serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        primary: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-playfair)', 'Georgia', 'serif'],
       },
       fontSize: {
         '90': ['5.625rem', { lineHeight: '1.05' }],

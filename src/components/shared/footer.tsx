@@ -13,7 +13,7 @@ export default function SiteFooter() {
           <div className="grid grid-cols-12 gap-4 md:gap-6">
             {/* Stay Connected */}
             <div className="col-span-12 md:col-span-6 space-y-5 xl:space-y-8">
-              <h2 className="text-primary_shade">Stay Connected with RehabVet</h2>
+              <h4 className="text-primary_shade">Stay Connected with RehabVet</h4>
               <p className="d2c_footer_text !capitalize-none">
                 Singapore&apos;s first full-fledged animal rehabilitation clinic offering the widest range of rehabilitation modalities.
               </p>
@@ -29,7 +29,7 @@ export default function SiteFooter() {
 
             {/* Quick Links */}
             <div className="col-span-12 md:col-span-3 space-y-5 xl:space-y-8 lg:pl-10 2xl:pl-15">
-              <h3 className="text-primary">Quick Links</h3>
+              <p className="text-primary font-bold text-lg uppercase tracking-wider">Quick Links</p>
               <div className="flex flex-col space-y-4">
                 <Link href="/" className="d2c_footer_link">Home</Link>
                 <Link href="/about" className="d2c_footer_link">About</Link>
@@ -44,7 +44,7 @@ export default function SiteFooter() {
 
             {/* Contact Info */}
             <div className="col-span-12 md:col-span-3 space-y-5 xl:space-y-8 pl-0 lg:pl-8 xl:pl-15">
-              <h3 className="text-primary">Contact Info</h3>
+              <p className="text-primary font-bold text-lg uppercase tracking-wider">Contact Info</p>
               <div className="flex flex-col space-y-4">
                 <a href="mailto:hello@rehabvet.com" className="d2c_footer_link lowercase">hello@rehabvet.com</a>
                 <a href="tel:+6562916881" className="d2c_footer_link">+65 6291 6881</a>

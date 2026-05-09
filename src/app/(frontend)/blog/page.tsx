@@ -4,6 +4,9 @@ import Image from 'next/image'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { BlogPost, Media } from '@/payload-types'
+import PagesHeader from '@/components/shared/pages-header'
+import Button from '@/components/shared/primary-button'
+import { FaPaw } from 'react-icons/fa'
 
 export const dynamic = 'force-dynamic'
 
@@ -67,7 +70,6 @@ export default async function BlogPage({
     posts = result.docs
     totalPages = result.totalPages
 
-    // Get all posts for category counts
     const allPosts = await payload.find({
       collection: 'blog-posts',
       limit: 500,
@@ -81,88 +83,76 @@ export default async function BlogPage({
         categoryCounts[c] = (categoryCounts[c] || 0) + 1
       })
     })
-    allCategories = Array.from(catSet).sort((a, b) =>
-      (categoryCounts[b] || 0) - (categoryCounts[a] || 0)
-    )
+    allCategories = Array.from(catSet).sort((a, b) => (categoryCounts[b] || 0) - (categoryCounts[a] || 0))
   } catch (e) {
     console.error('Blog page error:', e)
   }
 
+  const totalPostCount = Object.values(categoryCounts).reduce((a, b) => a + b, 0)
+
   return (
     <>
-      {/* Hero — full width with background image */}
-      <section className="relative bg-gray-800 py-24 text-white overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-40"
-          style={{ backgroundImage: "url('https://rehabvet.com/wp-content/uploads/2026/02/dog-physiotherapy-singapore-featured.jpg')" }}
-        />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold sm:text-5xl">RehabVet Blog</h1>
-          <p className="mt-3 text-sm text-gray-300">
-            <Link href="/" className="hover:text-white">Home</Link>
-            <span className="mx-2">/</span>
-            <span className="text-accent-400">Blog</span>
-          </p>
-        </div>
-      </section>
+      <PagesHeader
+        title="RehabVet Blog"
+        breadcrumb={[{ name: 'Home', href: '/' }, { name: 'Blog' }]}
+      />
 
-      <section className="py-14 bg-gray-50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-10">
+      <section>
+        <div className="container">
+          <div className="flex flex-col lg:flex-row gap-10 xl:gap-14">
 
-            {/* Main content */}
+            {/* ── Main post grid ── */}
             <div className="flex-1 min-w-0">
               {posts.length === 0 ? (
-                <p className="text-center text-gray-500 py-16">No posts found.</p>
+                <p className="text-center text-text_color py-16">No posts found.</p>
               ) : (
                 <>
                   <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
-                    {posts.map((post) => {
+                    {posts.map((post, i) => {
                       const imgUrl = getImageUrl(post.featuredImage as Media)
                       const firstCat = post.categories?.[0]
                       return (
                         <article
                           key={post.id}
-                          className="group flex flex-col bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100"
+                          className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-border_one hover:border-primary hover:shadow-lg transition-all duration-300"
+                          data-aos="zoom-in"
+                          data-aos-delay={100 + i * 50}
                         >
-                          {/* Image */}
-                          <Link href={`/blog/${post.slug}`} className="relative block h-52 overflow-hidden bg-gray-100">
+                          <Link href={`/blog/${post.slug}`} className="relative block h-52 overflow-hidden bg-primary_shade">
                             {imgUrl ? (
                               <Image
                                 src={imgUrl}
                                 alt={(post.featuredImage as Media)?.alt || post.title}
                                 fill
                                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                className="object-cover group-hover:scale-105 transition-transform duration-500"
                               />
                             ) : (
-                              <div className="w-full h-full bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-                                <span className="text-primary-400 text-sm font-medium">RehabVet</span>
+                              <div className="w-full h-full flex items-center justify-center">
+                                <span className="text-primary/40 text-sm font-semibold tracking-wide">RehabVet</span>
                               </div>
-                            )}
-                            {/* Category badge on image */}
-                            {firstCat && (
-                              <span className="absolute top-3 left-3 rounded-full bg-accent-500 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white shadow">
-                                {CATEGORY_LABELS[firstCat] || firstCat}
-                              </span>
                             )}
                           </Link>
 
-                          {/* Content */}
-                          <div className="flex flex-1 flex-col p-5">
+                          <div className="flex flex-1 flex-col p-6 space-y-3">
+                            {firstCat && (
+                              <span className="self-start rounded-full bg-primary_shade px-3 py-0.5 text-xs font-bold text-primary">
+                                {CATEGORY_LABELS[firstCat] || firstCat}
+                              </span>
+                            )}
                             <Link href={`/blog/${post.slug}`}>
-                              <h2 className="text-base font-bold text-gray-900 group-hover:text-accent-500 transition-colors line-clamp-2 leading-snug">
+                              <h5 className="!text-lg !font-bold group-hover:text-primary transition-colors line-clamp-2 !leading-snug">
                                 {post.title}
-                              </h2>
+                              </h5>
                             </Link>
                             {post.excerpt && (
-                              <p className="mt-2 text-sm text-gray-500 line-clamp-3 flex-1">{post.excerpt}</p>
+                              <p className="text-sm line-clamp-3 flex-1">{post.excerpt}</p>
                             )}
-                            <div className="mt-4 flex items-center justify-between">
+                            <div className="flex items-center justify-between pt-2 border-t border-border_one">
                               <span className="text-xs text-gray-400">{formatDate(post.date)}</span>
                               <Link
                                 href={`/blog/${post.slug}`}
-                                className="text-sm font-semibold text-accent-500 hover:text-accent-600 transition-colors"
+                                className="text-sm font-semibold text-primary hover:text-primary-700 transition-colors"
                               >
                                 Read More »
                               </Link>
@@ -175,11 +165,11 @@ export default async function BlogPage({
 
                   {/* Pagination */}
                   {totalPages > 1 && (
-                    <nav className="mt-12 flex justify-center gap-2">
+                    <nav className="mt-12 flex justify-center flex-wrap gap-2">
                       {currentPage > 1 && (
                         <Link
                           href={`/blog?page=${currentPage - 1}${category ? `&category=${category}` : ''}`}
-                          className="rounded px-4 py-2 text-sm font-medium border border-gray-300 text-gray-700 hover:bg-accent-50 hover:border-accent-400 transition-colors"
+                          className="rounded-full px-5 py-2 text-sm font-semibold border border-border_one text-dark hover:border-primary hover:text-primary transition-colors"
                         >
                           ← Prev
                         </Link>
@@ -188,10 +178,10 @@ export default async function BlogPage({
                         <Link
                           key={p}
                           href={`/blog?page=${p}${category ? `&category=${category}` : ''}`}
-                          className={`rounded px-4 py-2 text-sm font-medium transition-colors ${
+                          className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
                             p === currentPage
-                              ? 'bg-accent-500 text-white'
-                              : 'border border-gray-300 text-gray-700 hover:bg-accent-50'
+                              ? 'bg-primary text-white border border-primary'
+                              : 'border border-border_one text-dark hover:border-primary hover:text-primary'
                           }`}
                         >
                           {p}
@@ -200,7 +190,7 @@ export default async function BlogPage({
                       {currentPage < totalPages && (
                         <Link
                           href={`/blog?page=${currentPage + 1}${category ? `&category=${category}` : ''}`}
-                          className="rounded px-4 py-2 text-sm font-medium border border-gray-300 text-gray-700 hover:bg-accent-50 hover:border-accent-400 transition-colors"
+                          className="rounded-full px-5 py-2 text-sm font-semibold border border-border_one text-dark hover:border-primary hover:text-primary transition-colors"
                         >
                           Next →
                         </Link>
@@ -211,48 +201,55 @@ export default async function BlogPage({
               )}
             </div>
 
-            {/* Sidebar */}
-            <aside className="w-full lg:w-72 shrink-0 space-y-8">
+            {/* ── Sidebar ── */}
+            <aside className="w-full lg:w-72 xl:w-80 shrink-0 space-y-8">
+
               {/* Search */}
-              <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-5">
-                <h3 className="text-sm font-bold uppercase tracking-wider text-gray-700 mb-3">Search</h3>
+              <div className="bg-white rounded-2xl border border-border_one p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <FaPaw className="text-primary" />
+                  <p className="text-sm font-bold uppercase tracking-wider text-dark">Search</p>
+                </div>
                 <form action="/blog" method="get" className="flex gap-2">
                   <input
                     name="q"
                     type="text"
-                    placeholder="Type to start searching..."
-                    className="flex-1 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-accent-400"
+                    placeholder="Search articles..."
+                    className="flex-1 border border-border_one rounded-full px-4 py-2 text-sm focus:outline-none focus:border-primary transition-colors"
                   />
                   <button
                     type="submit"
-                    className="bg-gray-800 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-gray-700 transition-colors"
+                    className="bg-primary text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-primary-700 transition-colors"
                   >
-                    Search
+                    Go
                   </button>
                 </form>
               </div>
 
               {/* Categories */}
-              <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-5">
-                <h3 className="text-sm font-bold uppercase tracking-wider text-gray-700 mb-3">Blog Categories</h3>
-                <ul className="space-y-2">
+              <div className="bg-white rounded-2xl border border-border_one p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <FaPaw className="text-primary" />
+                  <p className="text-sm font-bold uppercase tracking-wider text-dark">Blog Categories</p>
+                </div>
+                <ul className="space-y-1">
                   <li>
                     <Link
                       href="/blog"
-                      className={`flex items-center justify-between text-sm py-1 border-b border-gray-50 hover:text-accent-500 transition-colors ${!category ? 'text-accent-500 font-semibold' : 'text-gray-600'}`}
+                      className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors ${!category ? 'bg-primary_shade text-primary font-semibold' : 'text-text_color hover:bg-primary_shade hover:text-primary'}`}
                     >
                       <span>All Posts</span>
-                      <span className="text-xs text-gray-400">{Object.values(categoryCounts).reduce((a, b) => a + b, 0)}</span>
+                      <span className="text-xs font-semibold">{totalPostCount}</span>
                     </Link>
                   </li>
                   {allCategories.map((cat) => (
                     <li key={cat}>
                       <Link
                         href={`/blog?category=${cat}`}
-                        className={`flex items-center justify-between text-sm py-1 border-b border-gray-50 hover:text-accent-500 transition-colors ${category === cat ? 'text-accent-500 font-semibold' : 'text-gray-600'}`}
+                        className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors ${category === cat ? 'bg-primary_shade text-primary font-semibold' : 'text-text_color hover:bg-primary_shade hover:text-primary'}`}
                       >
                         <span>{CATEGORY_LABELS[cat] || cat}</span>
-                        <span className="text-xs text-gray-400">{categoryCounts[cat] || 0}</span>
+                        <span className="text-xs font-semibold">{categoryCounts[cat] || 0}</span>
                       </Link>
                     </li>
                   ))}
@@ -260,15 +257,16 @@ export default async function BlogPage({
               </div>
 
               {/* CTA */}
-              <div className="bg-primary-600 rounded-lg p-5 text-white text-center">
-                <h3 className="font-bold text-lg">Book a Consultation</h3>
-                <p className="mt-2 text-sm text-primary-100">Help your pet recover with expert rehabilitation care.</p>
-                <Link
+              <div className="bg-primary rounded-2xl p-6 text-white text-center space-y-3">
+                <FaPaw className="text-white/60 text-2xl mx-auto" />
+                <h6 className="!text-white !font-bold">Book a Consultation</h6>
+                <p className="text-sm text-white/80">Help your pet recover with expert rehabilitation care.</p>
+                <Button
+                  text="Contact Us"
                   href="/contact"
-                  className="mt-4 inline-block rounded-full bg-accent-500 px-6 py-2 text-sm font-semibold text-white hover:bg-accent-600 transition-colors"
-                >
-                  Contact Us
-                </Link>
+                  as="link"
+                  className="!bg-white !border-white !text-primary hover:!bg-primary_shade !w-full justify-center"
+                />
               </div>
             </aside>
           </div>

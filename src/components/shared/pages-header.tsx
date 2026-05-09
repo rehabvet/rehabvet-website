@@ -8,9 +8,9 @@ interface PagesHeaderProps {
 
 export default function PagesHeader({ title, breadcrumb }: PagesHeaderProps) {
   return (
-    <div className="bg-primary_bg py-8 md:py-10 xl:py-16 z-10 relative">
+    <div className="bg-primary_bg py-6 md:py-8 xl:py-12 z-10 relative">
       <div className="container">
-        <div className="py-10 md:py-15 xl:py-25 2xl:py-30 bg-primary_shade rounded-[30px] text-center space-y-2 lg:space-y-5 xl:space-y-7">
+        <div className="py-10 md:py-14 xl:py-20 bg-primary_shade rounded-[30px] text-center space-y-2 lg:space-y-4 xl:space-y-6">
           <h1 className="animateText">{title}</h1>
           {breadcrumb && (
             <div className="capitalize font-primary md:font-semibold text-dark text-lg">
