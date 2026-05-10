@@ -86,7 +86,7 @@ export default async function HomePage() {
   try {
     const payload = await getPayload({ config })
     const [servicesResult, conditionsResult, postsResult] = await Promise.all([
-      payload.find({ collection: 'services', limit: 12, sort: 'title' }),
+      payload.find({ collection: 'services', limit: 12, sort: 'title', depth: 2 }),
       payload.find({ collection: 'conditions', limit: 100, sort: 'title' }),
       payload.find({ collection: 'blog-posts', limit: 6, sort: '-date', depth: 2 }),
     ])
@@ -217,18 +217,28 @@ export default async function HomePage() {
             title="Expert Rehabilitation Services"
           />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {HOMEPAGE_SERVICES.map((service, i) => {
-              const Icon = SERVICE_ICONS[i]
+            {(services.length > 0 ? services : HOMEPAGE_SERVICES).map((service, i) => {
+              const Icon = SERVICE_ICONS[i % SERVICE_ICONS.length]
+              const heroImage = (service as Service).heroImage as Media | null | undefined
               return (
                 <Link
                   key={service.slug}
                   href={`/services/${service.slug}`}
                   className="d2c_service_card group rounded-2xl bg-white overflow-hidden border border-border_one hover:border-primary hover:shadow-lg transition-all duration-300"
-                  data-aos="zoom-in"
-                  data-aos-delay={200 + i * 100}
+                  data-aos="fade-up"
+                  data-aos-delay={100 + (i % 4) * 100}
                 >
                   <div className="relative h-40 overflow-hidden bg-primary_shade flex items-center justify-center">
-                    <Icon className="text-primary/30 text-6xl group-hover:text-primary/50 transition-colors duration-300" />
+                    {heroImage && heroImage.url ? (
+                      <PayloadImage
+                        media={heroImage}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        className="group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <Icon className="text-primary/30 text-6xl group-hover:text-primary/50 transition-colors duration-300" />
+                    )}
                   </div>
                   <div className="p-6 space-y-2">
                     <h5 className="!font-bold !text-lg group-hover:text-primary transition-colors">
@@ -312,8 +322,8 @@ export default async function HomePage() {
                   key={post.id}
                   href={`/blog/${post.slug}`}
                   className="d2c_blog_card group flex flex-col rounded-2xl bg-white border border-border_one overflow-hidden hover:border-primary hover:shadow-lg transition-all duration-300"
-                  data-aos="zoom-in"
-                  data-aos-delay={200 + i * 100}
+                  data-aos="fade-up"
+                  data-aos-delay={100 + i * 100}
                 >
                   <div className="relative h-48 overflow-hidden bg-primary_shade">
                     <PayloadImage
