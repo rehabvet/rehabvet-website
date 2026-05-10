@@ -49,7 +49,7 @@ export default function ModalitiesPage() {
                   data-aos="zoom-in"
                   data-aos-delay={200 + i * 100}
                 >
-                  <div className={`${MODALITY_COLORS[i % MODALITY_COLORS.length]} p-5 lg:p-8 xl:p-10 rounded-lg space-y-4 h-full flex flex-col hover:shadow-lg transition-shadow duration-300`}>
+                  <div className={`${MODALITY_COLORS[i % MODALITY_COLORS.length]} p-5 lg:p-8 xl:p-10 rounded-2xl space-y-4 h-full flex flex-col hover:shadow-lg transition-shadow duration-300`}>
                     <h3 className="!text-white">{mod.title}</h3>
                     <p className="text-white/90 flex-1">{mod.excerpt}</p>
                     <span className="inline-flex items-center gap-1 text-white font-semibold text-sm group-hover:gap-2 transition-all">

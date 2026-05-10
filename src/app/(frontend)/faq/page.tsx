@@ -1,4 +1,7 @@
 import type { Metadata } from 'next'
+import PagesHeader from '@/components/shared/pages-header'
+import SectionHeader from '@/components/shared/section-header'
+import Button from '@/components/shared/primary-button'
 
 export const dynamic = 'force-dynamic'
 
@@ -566,26 +569,20 @@ const FAQ_DATA: { category: string; items: FaqItem[] }[] = [
 export default function FaqPage() {
   return (
     <>
-      {/* Hero */}
-      <section className="bg-primary-900 py-16 text-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <p className="text-sm font-medium text-primary-300 mb-2">
-            <span className="text-primary-400">Home</span> / FAQ
-          </p>
-          <h1 className="text-4xl font-bold sm:text-5xl">Frequently Asked Questions</h1>
-        </div>
-      </section>
+      <PagesHeader
+        title="Frequently Asked Questions"
+        breadcrumb={[{ name: 'Home', href: '/' }, { name: 'FAQ' }]}
+      />
 
-      {/* Category tabs */}
-      <section className="py-16">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          {/* Category quick links */}
-          <nav className="mb-12 flex flex-wrap gap-2">
+      <section>
+        <div className="container">
+          {/* Category quick-jump pills */}
+          <nav className="mb-12 flex flex-wrap gap-2" data-aos="fade-up">
             {FAQ_DATA.map((section) => (
               <a
                 key={section.category}
                 href={`#${section.category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-                className="rounded-full border border-primary-200 px-4 py-1.5 text-sm font-medium text-primary-700 hover:bg-primary-50 hover:border-primary-400 transition-colors"
+                className="rounded-full border border-border_one px-4 py-1.5 text-sm font-semibold text-dark hover:border-primary hover:text-primary hover:bg-primary_shade transition-colors"
               >
                 {section.category}
               </a>
@@ -594,37 +591,38 @@ export default function FaqPage() {
 
           {/* FAQ sections */}
           <div className="space-y-14">
-            {FAQ_DATA.map((section) => (
+            {FAQ_DATA.map((section, si) => (
               <div
                 key={section.category}
                 id={section.category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}
               >
-                <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary-200">
-                  {section.category}
-                </h2>
+                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border_one" data-aos="fade-up">
+                  <h3>{section.category}</h3>
+                  <span className="rounded-full bg-primary_shade px-3 py-0.5 text-xs font-bold text-primary">
+                    {section.items.length}
+                  </span>
+                </div>
+
                 <div className="space-y-3">
-                  {section.items.map((item) => (
+                  {section.items.map((item, i) => (
                     <details
                       key={item.question}
-                      className="group rounded-xl border border-gray-200 bg-white overflow-hidden"
+                      className="group rounded-2xl border border-border_one bg-white overflow-hidden"
+                      data-aos="fade-up"
+                      data-aos-delay={50 + i * 30}
                     >
-                      <summary className="cursor-pointer list-none px-6 py-4 flex items-center justify-between font-medium text-gray-900 hover:bg-gray-50 transition-colors">
+                      <summary className="cursor-pointer list-none px-6 py-4 flex items-center justify-between font-semibold text-dark hover:bg-primary_shade transition-colors">
                         <span>{item.question}</span>
                         <svg
-                          className="h-5 w-5 shrink-0 text-gray-400 transition-transform group-open:rotate-180"
+                          className="h-5 w-5 shrink-0 text-primary transition-transform duration-300 group-open:rotate-180"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 9l-7 7-7-7"
-                          />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                       </summary>
-                      <div className="px-6 pb-5 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+                      <div className="px-6 pb-5 text-text_color leading-relaxed border-t border-border_one pt-4">
                         {item.answer}
                       </div>
                     </details>
@@ -637,20 +635,25 @@ export default function FaqPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-primary-500 py-14">
-        <div className="mx-auto max-w-4xl px-4 text-center">
-          <h2 className="text-2xl font-bold text-white sm:text-3xl">
-            Still have questions?
-          </h2>
-          <p className="mt-3 text-primary-100">
+      <section className="!bg-primary">
+        <div className="container text-center">
+          <SectionHeader
+            className="text-center"
+            subtitle="Still Curious?"
+            title="Still have questions?"
+            titleClass="!text-white"
+          />
+          <p className="mt-4 text-white/80 text-lg max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay={200}>
             Our team is happy to help. Get in touch and we&apos;ll answer any questions you have about your pet&apos;s rehabilitation.
           </p>
-          <a
-            href="/contact"
-            className="mt-6 inline-block rounded-full bg-accent-500 px-8 py-3 font-semibold text-white hover:bg-accent-600 transition-colors"
-          >
-            Contact Us
-          </a>
+          <div className="mt-8" data-aos="fade-up" data-aos-delay={400}>
+            <Button
+              text="Contact Us"
+              href="/contact"
+              as="link"
+              className="!bg-white !border-white !text-primary hover:!bg-primary_shade"
+            />
+          </div>
         </div>
       </section>
     </>
