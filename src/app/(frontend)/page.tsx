@@ -7,6 +7,7 @@ import { PayloadImage } from '@/components/PayloadImage'
 import type { Service, Condition, BlogPost, Media } from '@/payload-types'
 import SectionHeader from '@/components/shared/section-header'
 import Button from '@/components/shared/primary-button'
+import TeamSection from '@/components/shared/team-section'
 import { FaCheckCircle, FaHeart, FaMedkit, FaPaw } from 'react-icons/fa'
 
 export const dynamic = 'force-dynamic'
@@ -260,18 +261,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Team ── */}
-      <section className="!bg-primary">
-        <div className="container text-center">
-          <h6 className="!text-primary-900/60 mb-3" data-aos="fade-up">Our People</h6>
-          <h2 className="!text-white" data-aos="fade-up" data-aos-delay={200}>Meet The RehabVet Team</h2>
-          <p className="mt-4 text-lg text-white/80 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay={300}>
-            Our dedicated veterinarians and therapists bring years of specialised experience to every patient.
-          </p>
-          <div className="mt-10" data-aos="fade-up" data-aos-delay={400}>
-            <Button text="Meet the Team" href="/about" as="link" className="!bg-dark !border-dark !text-white hover:!bg-white hover:!text-dark hover:!border-white" />
-          </div>
-        </div>
-      </section>
+      <TeamSection />
 
       {/* ── Conditions ── */}
       {conditionCategories.length > 0 && (
