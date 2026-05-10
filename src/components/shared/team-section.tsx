@@ -103,13 +103,13 @@ export default function TeamSection() {
               data-aos="fade-up"
               data-aos-delay={100 + (i % 3) * 100}
             >
-              <div className="relative h-56 overflow-hidden bg-primary_shade">
+              <div className="relative h-64 overflow-hidden bg-primary_shade">
                 <Image
                   src={member.photo}
                   alt={member.name}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover object-top"
+                  className="object-cover object-center"
                 />
               </div>
               <div className="p-6 space-y-1">
