@@ -14,21 +14,7 @@ export const metadata: Metadata = {
     "Learn about RehabVet, Singapore's first full-fledged animal rehabilitation clinic and our dedicated team of veterinarians and therapists.",
 }
 
-const teamMembers = [
-  {
-    name: 'Dr. Sara Lam',
-    role: 'Founder & Veterinarian',
-    credentials: 'BVSc (Sydney), CCRT, CVA',
-    bio: 'Dr Sara founded RehabVet in 2019 with a vision to provide Singapore\'s pets with comprehensive rehabilitation care. She holds a Bachelor of Veterinary Science from the University of Sydney, is a Certified Canine Rehabilitation Therapist (CCRT), and a Certified Veterinary Acupuncturist (CVA). With her experience and passion for helping animals recover, Dr Sara has built RehabVet into Singapore\'s leading animal rehabilitation clinic.',
-    photo: '/images/team-sara.jpg',
-  },
-  { name: 'Xan', role: 'Animal Rehabilitation Therapist', credentials: '', bio: 'Xan is a dedicated animal rehabilitation therapist with a genuine passion for helping pets recover and thrive.', photo: '/images/team-xan.jpg' },
-  { name: 'Sean', role: 'Animal Rehabilitation Therapist', credentials: '', bio: 'Sean is a compassionate and skilled animal rehabilitation therapist.', photo: '/images/team-sean.jpg' },
-  { name: 'Joyce', role: 'Animal Rehabilitation Therapist', credentials: '', bio: '', photo: '/images/team-joyce.jpg' },
-  { name: 'Noelle', role: 'Animal Rehabilitation Therapist', credentials: '', bio: '', photo: '/images/team-noelle.jpg' },
-  { name: 'Claire', role: 'Client Relations', credentials: '', bio: '', photo: '/images/team-claire.jpg' },
-  { name: 'Hazel', role: 'Animal Rehabilitation Therapist', credentials: '', bio: '', photo: '/images/team-hazel.jpg' },
-]
+import { TEAM_MEMBERS as teamMembers } from '@/components/shared/team-section'
 
 const coreValues = [
   { icon: FaHeart, title: 'Compassion', desc: 'We treat every animal with the same love and care we would give our own pets.' },
@@ -109,8 +95,8 @@ export default function AboutPage() {
               <div
                 key={member.name}
                 className="d2c_team_card rounded-2xl bg-white border border-border_one overflow-hidden"
-                data-aos="zoom-in"
-                data-aos-delay={200 + i * 100}
+                data-aos="fade-up"
+                data-aos-delay={100 + (i % 3) * 100}
               >
                 <div className="relative h-56 overflow-hidden bg-primary_shade">
                   <Image src={member.photo} alt={member.name} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover object-top" />
@@ -136,8 +122,8 @@ export default function AboutPage() {
               <div
                 key={val.title}
                 className="text-center space-y-4 p-8 lg:p-10 rounded-2xl bg-primary_shade"
-                data-aos="zoom-in"
-                data-aos-delay={200 + i * 150}
+                data-aos="fade-up"
+                data-aos-delay={100 + i * 150}
               >
                 <div className="w-16 h-16 mx-auto rounded-full bg-white flex items-center justify-center text-primary text-2xl">
                   <val.icon />

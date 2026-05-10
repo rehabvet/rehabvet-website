@@ -9,6 +9,7 @@ import type { Service, Media } from '@/payload-types'
 import PagesHeader from '@/components/shared/pages-header'
 import SectionHeader from '@/components/shared/section-header'
 import Button from '@/components/shared/primary-button'
+import TeamSection from '@/components/shared/team-section'
 import type { ReactNode } from 'react'
 import VeterinaryRehabilitationConsultationContent from './content/veterinary-rehabilitation-consultation'
 import AnimalRehabilitationContent from './content/animal-rehabilitation'
@@ -124,11 +125,20 @@ export default async function ServicePage({ params }: Props) {
               <div className="prose prose-lg max-w-none">
                 {staticEntry.body}
               </div>
-              <div className="mt-16 rounded-2xl bg-primary_shade p-8 text-center" data-aos="fade-up">
-                <h3>Interested in {staticEntry.title}?</h3>
-                <p className="mt-2">Book a consultation to discuss how we can help your pet.</p>
+            </div>
+          </div>
+        </section>
+
+        <TeamSection />
+
+        <section>
+          <div className="container">
+            <div className="max-w-3xl mx-auto">
+              <div className="rounded-2xl bg-primary p-8 lg:p-12 text-center" data-aos="fade-up">
+                <h3 className="!text-white">Interested in {staticEntry.title}?</h3>
+                <p className="mt-2 text-white/80">Book a consultation to discuss how we can help your pet.</p>
                 <div className="mt-6">
-                  <Button text="Book Appointment" href="/contact" as="link" />
+                  <Button text="Book Appointment" href="/contact" as="link" className="!bg-white !border-white !text-primary hover:!bg-primary_shade" />
                 </div>
               </div>
             </div>
@@ -178,11 +188,20 @@ export default async function ServicePage({ params }: Props) {
                   </div>
                 </div>
               )}
-              <div className="mt-16 rounded-2xl bg-primary_shade p-8 text-center" data-aos="fade-up">
-                <h3>Interested in {service.title}?</h3>
-                <p className="mt-2">Book a consultation to discuss how we can help your pet.</p>
+            </div>
+          </div>
+        </section>
+
+        <TeamSection />
+
+        <section>
+          <div className="container">
+            <div className="max-w-3xl mx-auto">
+              <div className="rounded-2xl bg-primary p-8 lg:p-12 text-center" data-aos="fade-up">
+                <h3 className="!text-white">Interested in {service.title}?</h3>
+                <p className="mt-2 text-white/80">Book a consultation to discuss how we can help your pet.</p>
                 <div className="mt-6">
-                  <Button text="Book Appointment" href="/contact" as="link" />
+                  <Button text="Book Appointment" href="/contact" as="link" className="!bg-white !border-white !text-primary hover:!bg-primary_shade" />
                 </div>
               </div>
             </div>
