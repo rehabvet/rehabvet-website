@@ -88,7 +88,7 @@ export default async function HomePage() {
     const [servicesResult, conditionsResult, postsResult] = await Promise.all([
       payload.find({ collection: 'services', limit: 12, sort: 'title' }),
       payload.find({ collection: 'conditions', limit: 100, sort: 'title' }),
-      payload.find({ collection: 'blog-posts', limit: 6, sort: '-date' }),
+      payload.find({ collection: 'blog-posts', limit: 6, sort: '-date', depth: 2 }),
     ])
     services = servicesResult.docs
     conditions = conditionsResult.docs
